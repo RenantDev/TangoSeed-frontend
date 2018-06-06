@@ -9,7 +9,7 @@ import {Dashboard5Component} from './views/dashboards/dashboard5.component';
 import {ProfileComponent} from './views/profile/profile.component';
 
 import {StarterViewComponent} from './views/appviews/starterview.component';
-import {LoginComponent} from './views/appviews/login.component';
+import {LoginComponent} from './views/login/login.component';
 
 import {BlankLayoutComponent} from './components/common/layouts/blankLayout.component';
 import {BasicLayoutComponent} from './components/common/layouts/basicLayout.component';
