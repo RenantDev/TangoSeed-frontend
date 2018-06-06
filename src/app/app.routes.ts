@@ -4,15 +4,16 @@ import {Dashboard1Component} from './views/dashboards/dashboard1.component';
 import {Dashboard2Component} from './views/dashboards/dashboard2.component';
 import {Dashboard3Component} from './views/dashboards/dashboard3.component';
 import {Dashboard4Component} from './views/dashboards/dashboard4.component';
-import {Dashboard41Component} from './views/dashboards/dashboard41.component';
 import {Dashboard5Component} from './views/dashboards/dashboard5.component';
+
+import {ProfileComponent} from './views/profile/profile.component';
 
 import {StarterViewComponent} from './views/appviews/starterview.component';
 import {LoginComponent} from './views/appviews/login.component';
 
 import {BlankLayoutComponent} from './components/common/layouts/blankLayout.component';
 import {BasicLayoutComponent} from './components/common/layouts/basicLayout.component';
-import {TopNavigationLayoutComponent} from './components/common/layouts/topNavigationlayout.component';
+import {HomeComponent} from './views/home/home.component';
 
 export const ROUTES: Routes = [
   // Main redirect
@@ -30,15 +31,11 @@ export const ROUTES: Routes = [
     ]
   },
   {
-    path: 'dashboards', component: TopNavigationLayoutComponent,
-    children: [
-      {path: 'dashboard41', component: Dashboard41Component}
-    ]
-  },
-  {
     path: '', component: BasicLayoutComponent,
     children: [
-      {path: 'starterview', component: StarterViewComponent}
+      {path: 'starterview', component: StarterViewComponent},
+      {path: 'profile', component: ProfileComponent},
+      {path: 'home', component: HomeComponent}
     ]
   },
   {

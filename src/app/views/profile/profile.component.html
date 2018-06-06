@@ -1,0 +1,133 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+  <div class="col-lg-10">
+    <h2>Perfil do Usuário</h2>
+    <ol class="breadcrumb">
+      <li>
+        <strong>Home</strong>
+      </li>
+      <li class="active">
+        <strong>Perfil</strong>
+      </li>
+    </ol>
+  </div>
+  <div class="col-lg-2">
+
+  </div>
+</div>
+<div class="wrapper wrapper-content">
+  <div class="col-sm-12 col-md-12 col-lg-5">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <i class="fa fa-info-circle"></i> Informações da Conta
+      </div>
+      <div class="panel-body">
+        <button type="button" class="btn btn-success btn-group-justified m-b-sm" data-toggle="modal" data-target="#modalDadosPessoais"> Dados Pessoais
+        </button>
+        <button type="button" class="btn btn-success btn-group-justified m-b-sm" data-toggle="modal" data-target="#modalMinhaConta"> Minha Conta
+        </button>
+        <button type="button" class="btn btn-success btn-group-justified m-b-sm" data-toggle="modal" data-target="#modalNovaSenha"> Sua Senha
+        </button>
+        <button type="button" class="btn btn-success btn-group-justified m-b-sm disabled"> Foto do Perfil
+        </button>
+        <button type="button" class="btn btn-success btn-group-justified m-b-sm disabled"> Vincular Facebook
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="modal fade" id="modalDadosPessoais" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Dados Pessoais</h4>
+      </div>
+      <div class="modal-body">
+        <form method="get" class="form-horizontal">
+
+          <div class="form-group"><label class="col-sm-3 control-label">CPF</label>
+            <div class="col-sm-9"><input type="text" value="111.111.111-11" class="form-control"></div>
+          </div>
+
+          <div class="form-group"><label class="col-sm-3 control-label">Nome Completo</label>
+            <div class="col-sm-9"><input type="text" value="Renant Bernabe" class="form-control"></div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Salvar Modificações</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalMinhaConta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Minha Conta</h4>
+      </div>
+      <div class="modal-body">
+        <form method="get" class="form-horizontal">
+
+          <div class="form-group"><label class="col-sm-3 control-label">Nick</label>
+            <div class="col-sm-9"><input type="text" value="Mutar" class="form-control"></div>
+          </div>
+
+          <div class="form-group"><label class="col-sm-3 control-label">E-Mail</label>
+            <div class="col-sm-9"><input type="text" value="contato@bitkey.com.br" class="form-control">
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Salvar Modificações</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modalNovaSenha" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Sua Senha</h4>
+      </div>
+      <div class="modal-body">
+        <form method="get" class="form-horizontal">
+
+          <div class="form-group"><label class="col-sm-3 control-label">Senha atual</label>
+            <div class="col-sm-9"><input name="senha_atual" autocomplete="off" type="password" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group"><label class="col-sm-3 control-label">Nova senha</label>
+            <div class="col-sm-9"><input name="nova_senha" autocomplete="off" type="password" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-group"><label class="col-sm-3 control-label">Confirmar senha</label>
+            <div class="col-sm-9"><input name="confirmar_senha" autocomplete="off" type="password" class="form-control">
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary">Salvar Modificações</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -14,10 +14,14 @@ import {AppviewsModule} from './views/appviews/appviews.module';
 
 // App modules/components
 import {LayoutsModule} from './components/common/layouts/layouts.module';
+import { ProfileComponent } from './views/profile/profile.component';
+import { HomeComponent } from './views/home/home.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ProfileComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,7 @@ import {LayoutsModule} from './components/common/layouts/layouts.module';
     DashboardsModule,
     LayoutsModule,
     AppviewsModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

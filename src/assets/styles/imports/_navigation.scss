@@ -149,9 +149,17 @@
 .nav.navbar-top-links .dropdown-alerts a {
   font-size: 12px;
 }
-
+.img-avatar{
+  width: 50%;
+}
+.img-avatar-full{
+  background-image: url('assets/images/profile_small.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 70px;
+}
 .nav-header {
-  padding: 33px 25px;
+  padding: 15px 25px;
   background-color: $nav-bg;
   background-image: $nav-profile-pattern;
 
