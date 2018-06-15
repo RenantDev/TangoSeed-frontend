@@ -1,7 +1,4 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BsModalService, BsModalRef} from 'ngx-bootstrap';
-
-// declare var $: any;
 
 @Component({
   selector: 'app-profile',
@@ -20,13 +17,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.nav.className += ' white-bg';
   }
 
-
   public ngOnDestroy(): any {
     this.nav.classList.remove('white-bg');
   }
 
-  public openModal() {
-    // $('#myModal').modal('show');
-  }
 
 }

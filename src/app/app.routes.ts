@@ -13,11 +13,12 @@ import {LoginComponent} from './views/login/login.component';
 
 import {BlankLayoutComponent} from './components/common/layouts/blankLayout.component';
 import {BasicLayoutComponent} from './components/common/layouts/basicLayout.component';
-import {HomeComponent} from './views/home/home.component';
 
 export const ROUTES: Routes = [
   // Main redirect
-  {path: '', redirectTo: 'starterview', pathMatch: 'full'},
+  // {path: '', redirectTo: 'starterview', pathMatch: 'full'},
+
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
 
   // App views
   {
@@ -35,7 +36,6 @@ export const ROUTES: Routes = [
     children: [
       {path: 'starterview', component: StarterViewComponent},
       {path: 'profile', component: ProfileComponent},
-      {path: 'home', component: HomeComponent}
     ]
   },
   {
