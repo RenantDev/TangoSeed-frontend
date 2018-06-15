@@ -1,10 +1,10 @@
-import { InspiniaPage } from './app.po';
+import { TangoSeedPage } from './app.po';
 
 describe('inspinia App', () => {
-  let page: InspiniaPage;
+  let page: TangoSeedPage;
 
   beforeEach(() => {
-    page = new InspiniaPage();
+    page = new TangoSeedPage();
   });
 
   it('should display message saying app works', () => {

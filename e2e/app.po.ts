@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class InspiniaPage {
+export class TangoSeedPage {
   navigateTo() {
     return browser.get('/');
   }
