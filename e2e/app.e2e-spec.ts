@@ -1,6 +1,6 @@
 import { TangoSeedPage } from './app.po';
 
-describe('inspinia App', () => {
+describe('tangoseed App', () => {
   let page: TangoSeedPage;
 
   beforeEach(() => {
@@ -9,6 +9,6 @@ describe('inspinia App', () => {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect<any>(page.getParagraphText()).toEqual('app works!');
   });
 });

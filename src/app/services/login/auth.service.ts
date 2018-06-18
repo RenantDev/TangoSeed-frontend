@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Login} from '../../views/login/login';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {isBoolean} from "util";
+import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Router} from "@angular/router";
+import {Subject} from "rxjs/Subject";
+import {promise} from "selenium-webdriver";
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,11 @@ export class AuthService {
 
   private access_token = null;
   private refresh_token = null;
-  private status_login: boolean = false;
+
   private baseUrl = 'http://api.tangoseed/';
   private oauthUrl = this.baseUrl + 'oauth/token';
+
+  private status_login = new Subject<boolean>();
 
   public getAccessToken(login: Login) {
 
@@ -36,38 +39,43 @@ export class AuthService {
       scope: ''
     };
 
-    // Obtem o token com as informações obtidas
-
+    // Obtem o token com as informações do formulário de login
     this.http.post(this.oauthUrl, postData, {headers})
       .subscribe(
         res => {
-          if (login.save) {
-            this.refresh_token = res['refresh_token'].toString();
-            localStorage.setItem('refresh_token', this.refresh_token);
-          }
+          this.refresh_token = res['refresh_token'].toString();
+          localStorage.setItem('refresh_token', this.refresh_token);
+
           this.access_token = res['access_token'].toString();
           localStorage.setItem('token', this.access_token);
 
-          this.check();
+          console.log(this.check());
 
+          if (this.check() == true) {
+            this.router.navigate(['/starterview']);
+          }
         },
         err => {
           console.log("Error occured");
         }
       );
+
   }
 
+  // Revoga o token e remove do localstorage
   public logout() {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
 
-    return this.http.get(this.baseUrl + 'api/logout', {headers})
+    this.http.get(this.baseUrl + 'api/logout', {headers})
       .subscribe(
         res => {
+
           localStorage.setItem('token', null);
           localStorage.setItem('refresh_token', null);
+          this.router.navigate(['/login']);
         },
         err => {
           console.log("Error occured");
@@ -85,16 +93,16 @@ export class AuthService {
     this.http.get(this.baseUrl + 'api/status', {headers})
       .subscribe(
         res => {
+
           this.status_login = res['status'];
-          if (this.status_login) {
-            this.router.navigate(['/starterview']);
-          }
         },
         err => {
-          this.status_login = false;
+          this.status_login.next(false);
         }
       );
+    return this.status_login;
   }
+
 
   // Obitem o token que ja foi gerado pelo usuário
   public getToken() {

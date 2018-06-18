@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import 'jquery-slimscroll';
+import {AuthService} from "../../../services/login/auth.service";
 
-declare var jQuery:any;
+declare var jQuery: any;
 
 @Component({
   selector: 'navigation',
@@ -11,7 +12,8 @@ declare var jQuery:any;
 
 export class NavigationComponent {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private login: AuthService) {
+  }
 
   ngAfterViewInit() {
     jQuery('#side-menu').metisMenu();
@@ -23,8 +25,12 @@ export class NavigationComponent {
     }
   }
 
-  activeRoute(routename: string): boolean{
+  activeRoute(routename: string): boolean {
     return this.router.url.indexOf(routename) > -1;
+  }
+
+  logout() {
+    this.login.logout();
   }
 
 

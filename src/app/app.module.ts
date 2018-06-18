@@ -18,16 +18,16 @@ import {LayoutsModule} from './components/common/layouts/layouts.module';
 import {ProfileComponent} from './views/profile/profile.component';
 
 import {AuthService} from "./services/login/auth.service";
-import {LoginComponent} from "./views/login/login.component";
+import {LoginModule} from "./views/login/login.module";
 
 @NgModule({
   declarations: [
     AppComponent,
 
-    LoginComponent,
     ProfileComponent
   ],
   imports: [
+    LoginModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
