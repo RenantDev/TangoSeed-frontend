@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {Login} from '../../views/login/login';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Router} from "@angular/router";
-import {Subject} from "rxjs/Subject";
-import {promise} from "selenium-webdriver";
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +17,7 @@ export class AuthService {
   private baseUrl = 'http://api.tangoseed/';
   private oauthUrl = this.baseUrl + 'oauth/token';
 
-  private status_login = new Subject<boolean>();
+  private status_login: boolean;
 
   public getAccessToken(login: Login) {
 
@@ -49,11 +47,12 @@ export class AuthService {
           this.access_token = res['access_token'].toString();
           localStorage.setItem('token', this.access_token);
 
-          console.log(this.check());
+          this.check().then((res) => {
+            if (res) {
+              this.router.navigate(['/starterview']);
+            }
+          });
 
-          if (this.check() == true) {
-            this.router.navigate(['/starterview']);
-          }
         },
         err => {
           console.log("Error occured");
@@ -68,39 +67,43 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
+    if (confirm("Deseja sair ?")) {
+      this.http.get(this.baseUrl + 'api/logout', {headers})
+        .subscribe(
+          res => {
 
-    this.http.get(this.baseUrl + 'api/logout', {headers})
-      .subscribe(
-        res => {
-
-          localStorage.setItem('token', null);
-          localStorage.setItem('refresh_token', null);
-          this.router.navigate(['/login']);
-        },
-        err => {
-          console.log("Error occured");
-        }
-      );
+            localStorage.setItem('token', null);
+            localStorage.setItem('refresh_token', null);
+            this.router.navigate(['/login']);
+          },
+          err => {
+            console.log("Error occured");
+          }
+        );
+    }
   }
 
   // Verifica se o token é valido
   public check() {
-    const headers = new HttpHeaders({
-      'Accept': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    return new Promise(resolve => {
+      const headers = new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      });
+
+      this.http.get(this.baseUrl + 'api/status', {headers})
+        .subscribe(
+          (res: any) => {
+            this.status_login = res.status;
+            resolve(this.status_login);
+          },
+          (err) => {
+            this.status_login = false;
+            resolve(this.status_login)
+          }
+        );
+      ;
     });
-
-    this.http.get(this.baseUrl + 'api/status', {headers})
-      .subscribe(
-        res => {
-
-          this.status_login = res['status'];
-        },
-        err => {
-          this.status_login.next(false);
-        }
-      );
-    return this.status_login;
   }
 
 
