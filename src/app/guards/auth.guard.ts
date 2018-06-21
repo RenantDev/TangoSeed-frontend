@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router} from '@angular/router';
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
+import {AuthService} from "../services/login/auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,40 +9,27 @@ import { Observable } from 'rxjs';
 export class AuthGuard implements CanActivate {
 
   constructor(
+    private authService: AuthService,
     private router: Router
-  ) { }
-
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return true;
+  ) {
   }
 
-  loggin(data, delay){
-    return new Promise(resolve => {
-      if(data.username == "test" && data.password == "test"){
-        // setTimeout(function() {
-        let dataJson = {
-          nome: 'Pedro Hymino',
-          email: 'pedro@gmail.com'
-        };
-        localStorage.setItem("database", JSON.stringify(dataJson));
-        setTimeout(function() {
-          resolve(true);
-        }, delay);
-      }else{
-        setTimeout(function() {
-          resolve(false);
-        }, delay);
+  canActivate(route: ActivatedRouteSnapshot,
+              state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+
+    return this.authService.check().then((res: boolean) => {
+      if (res) {
+        console.log("this.status " + res);
+        return res;
+      } else {
+        this.router.navigate(['/login']);
+        return false;
       }
+    }, err => {
+      this.router.navigate(['/login']);
+      return false;
     });
-  }
 
-  logoff(){
-    if (confirm("Deseja sair ?")) {
-      localStorage.removeItem("database");
-      this.router.navigateByUrl("login");
-    }
   }
 
 }

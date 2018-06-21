@@ -24,6 +24,7 @@
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/animate.css/animate.min.css",
+              "node_modules/jquery-confirm/dist/jquery-confirm.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -32,6 +33,7 @@
               "node_modules/jquery-sparkline/jquery.sparkline.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
+              "node_modules/jquery-confirm/dist/jquery-confirm.min.js",
               "vendor/pace/pace.min.js"
             ]
           },

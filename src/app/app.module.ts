@@ -18,7 +18,9 @@ import {LayoutsModule} from './components/common/layouts/layouts.module';
 import {ProfileComponent} from './views/profile/profile.component';
 
 import {AuthService} from "./services/login/auth.service";
+
 import {LoginModule} from "./views/login/login.module";
+import {AuthGuard} from "./guards/auth.guard";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,7 @@ import {LoginModule} from "./views/login/login.module";
     AppviewsModule,
     RouterModule.forRoot(ROUTES),
   ],
-  providers: [AuthService, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AuthService, AuthGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

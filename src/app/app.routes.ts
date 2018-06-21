@@ -1,5 +1,7 @@
 import {Routes} from '@angular/router';
 
+import {AuthGuard} from "./guards/auth.guard";
+
 import {Dashboard1Component} from './views/dashboards/dashboard1.component';
 import {Dashboard2Component} from './views/dashboards/dashboard2.component';
 import {Dashboard3Component} from './views/dashboards/dashboard3.component';
@@ -28,23 +30,26 @@ export const ROUTES: Routes = [
       {path: 'dashboard2', component: Dashboard2Component},
       {path: 'dashboard3', component: Dashboard3Component},
       {path: 'dashboard4', component: Dashboard4Component},
-      {path: 'dashboard5', component: Dashboard5Component}
-    ]
+      {path: 'dashboard5', component: Dashboard5Component},
+    ],
+    canActivate: [AuthGuard]
+
   },
   {
     path: '', component: BasicLayoutComponent,
     children: [
       {path: 'starterview', component: StarterViewComponent},
       {path: 'profile', component: ProfileComponent},
-    ]
+    ],
+    canActivate: [AuthGuard]
   },
   {
     path: '', component: BlankLayoutComponent,
     children: [
-      { path: 'login', component: LoginComponent },
+      {path: 'login', component: LoginComponent},
     ]
   },
 
   // Handle all other routes
-  {path: '**',  redirectTo: 'starterview'}
+  {path: '**', redirectTo: 'starterview'}
 ];
