@@ -38,7 +38,7 @@ export const ROUTES: Routes = [
   {
     path: '', component: BasicLayoutComponent,
     children: [
-      {path: 'starterview', component: StarterViewComponent},
+      {path: 'dashboard', component: StarterViewComponent},
       {path: 'profile', component: ProfileComponent},
     ],
     canActivate: [AuthGuard]
@@ -51,5 +51,5 @@ export const ROUTES: Routes = [
   },
 
   // Handle all other routes
-  {path: '**', redirectTo: 'starterview'}
+  {path: '**', redirectTo: 'dashboard'}
 ];

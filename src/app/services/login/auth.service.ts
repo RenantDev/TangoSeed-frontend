@@ -40,45 +40,80 @@ export class AuthService {
       scope: ''
     };
 
-    // Obtem o token com as informações do formulário de login
-    this.http.post(this.oauthUrl, postData, {headers})
-      .subscribe(
-        (res) => {
-          this.refresh_token = res['refresh_token'].toString();
-          localStorage.setItem('refresh_token', this.refresh_token);
+    // Cria um objeto de referencia para todos os alertas
+    var refobj = [];
 
-          this.access_token = res['access_token'].toString();
-          localStorage.setItem('token', this.access_token);
+    // Adicionar um alerta no objeto de referencia
+    refobj.push($.alert({
+      title: '',
+      content: () => {
+        // Obtem o token com as informações do formulário de login
+        this.http.post(this.oauthUrl, postData, {headers})
+          .subscribe(
+            (res) => {
+              this.refresh_token = res['refresh_token'].toString();
+              localStorage.setItem('refresh_token', this.refresh_token);
 
-          this.router.navigate(['/starterview']);
+              this.access_token = res['access_token'].toString();
+              localStorage.setItem('token', this.access_token);
 
-          // this.check().then((res) => {
-          //   if (res) {
-          //     this.router.navigate(['/starterview']);
-          //   }
-          // });
-
-        },
-        (err) => {
-          $.alert({
-            title: "Dados invalidos!",
-            content: err.error.message
-          });
+              // Fecha todos os alertas referentes ao objeto refobj
+              this.router.navigate(['/dashboard']);
+              $.each(refobj, function (i, a) {
+                a.close(); // you fire close method of all confirms.
+              });
+            },
+            (err) => {
+              $.alert({
+                title: "<span style='text-align: center'><strong>Erro!</strong></span>",
+                content: err.error.message,
+                buttons: {
+                  ok: {
+                    action: function () {
+                      $.each(refobj, function (i, a) {
+                        a.close(); // you fire close method of all confirms.
+                      });
+                    }
+                  }
+                }
+              });
+            }
+          );
+        return '<div class="text-center">Autenticando</div>' +
+          '<div class="sk-spinner sk-spinner-cube-grid">\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '<div class="sk-cube"></div>\n' +
+          '</div>';
+      },
+      animationBounce: 1.2,
+      buttons: {
+        ok: {
+          btnClass: 'hide'
         }
-      );
+      },
+
+    }));
+
 
   }
 
   // Revoga o token e remove do localstorage
   public logout() {
     $.confirm({
-      title: 'Confirm!',
-      content: 'Simple confirm!',
+      title: 'Logout',
+      content: 'Deseja sair do sistema agora?',
       buttons: {
-        sair: (() => {
+        sim: (() => {
           this.revogaToken();
         }),
-        cancelar: function () {
+        não: function () {
 
         }
       }
