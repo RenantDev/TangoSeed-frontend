@@ -15,6 +15,8 @@ import {LoginComponent} from './views/login/login.component';
 
 import {BlankLayoutComponent} from './components/common/layouts/blankLayout.component';
 import {BasicLayoutComponent} from './components/common/layouts/basicLayout.component';
+import {UsersComponent} from "./views/admin/users/users.component";
+import {GroupsComponent} from "./views/admin/groups/groups.component";
 
 export const ROUTES: Routes = [
   // Main redirect
@@ -40,6 +42,14 @@ export const ROUTES: Routes = [
     children: [
       {path: 'dashboard', component: StarterViewComponent},
       {path: 'profile', component: ProfileComponent},
+    ],
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'admin', component: BasicLayoutComponent,
+    children: [
+      {path: 'users', component: UsersComponent},
+      {path: 'groups', component: GroupsComponent},
     ],
     canActivate: [AuthGuard]
   },

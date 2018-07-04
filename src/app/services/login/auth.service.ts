@@ -18,7 +18,7 @@ export class AuthService {
   private refresh_token = null;
 
   private baseUrl = 'http://api.tangoseed/';
-  private oauthUrl = this.baseUrl + 'oauth/token';
+  private oauthUrl = this.baseUrl + 'api/login';
 
   private status_login: boolean;
 
@@ -34,8 +34,8 @@ export class AuthService {
     const postData = {
       username: login.username,
       password: login.password,
-      client_id: 2,
-      client_secret: 'fBzFnCshSZry8XBgKSaDz4qZpSxjBb4GBaYw4vq8',
+      client_id: 1,
+      client_secret: 'zStQUfwCSpfn2lXJ9fc9UHF6smJDgdebuUxBGfYw',
       grant_type: 'password',
       scope: ''
     };

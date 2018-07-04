@@ -21,14 +21,17 @@ import {AuthService} from "./services/login/auth.service";
 
 import {LoginModule} from "./views/login/login.module";
 import {AuthGuard} from "./guards/auth.guard";
+import {AdminModule} from "./views/admin/admin.module";
 
 @NgModule({
   declarations: [
     AppComponent,
 
-    ProfileComponent
+    ProfileComponent,
+
   ],
   imports: [
+    AdminModule,
     LoginModule,
     BrowserModule,
     FormsModule,
