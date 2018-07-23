@@ -5,8 +5,8 @@
         <div class="profile-element text-center" dropdown>
           <img alt="image" class="img-circle img-avatar" src="assets/images/profile_small.jpg">
           <a dropdownToggle>
-            <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong> </span>
-            <span class="text-muted text-xs block">Art Director <b class="caret"></b> </span>
+            <span class="block m-t-xs"> <strong class="font-bold">{{ this.varGlobal.USER_NAME }}</strong> </span>
+            <span class="text-muted text-xs block">{{ this.varGlobal.USER_GROUP }} <b class="caret"></b> </span>
           </a>
           <ul class="animated fadeInRight dropdown-menu" *dropdownMenu>
             <li><a [routerLink]="['/profile']">Profile</a></li>
@@ -18,8 +18,8 @@
 
         </div>
       </li>
-      <li [ngClass]="{active: activeRoute('starter')}">
-        <a [routerLink]="['/starterview']"><i class="fa fa-home"></i> <span class="nav-label">Dashboard</span></a>
+      <li [ngClass]="{active: activeRoute('dashboard')}">
+        <a [routerLink]="['/dashboard']"><i class="fa fa-home"></i> <span class="nav-label">Dashboard</span></a>
       </li>
       <li [ngClass]="{active: activeRoute('admin')}">
         <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span> </a>

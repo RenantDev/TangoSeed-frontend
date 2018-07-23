@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
-  constructor() { }
+  public nav: any;
 
-  ngOnInit() {
+  constructor() {
+    this.nav = document.querySelector('nav.navbar');
+  }
+
+  public ngOnInit(): any {
+    this.nav.className += ' white-bg';
+  }
+
+  public ngOnDestroy(): any {
+    this.nav.classList.remove('white-bg');
   }
 
 }

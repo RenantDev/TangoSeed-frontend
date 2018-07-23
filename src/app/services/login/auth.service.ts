@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {Login} from '../../views/login/login';
 import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import {Router} from "@angular/router";
+import {ConfigGlobal} from "../config-global";
+import {VarGlobal} from "../var-global";
 
 declare var $: any;
 
@@ -11,14 +13,13 @@ declare var $: any;
 
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient, private router: Router, private config: ConfigGlobal, private varGlobal: VarGlobal) {
   }
 
   private access_token = null;
   private refresh_token = null;
 
-  private baseUrl = 'http://api.tangoseed/';
-  private oauthUrl = this.baseUrl + 'api/login';
+  private baseUrl = this.config.GLOBAL_URL;
 
   private status_login: boolean;
 
@@ -34,8 +35,8 @@ export class AuthService {
     const postData = {
       username: login.username,
       password: login.password,
-      client_id: 1,
-      client_secret: 'dOdu2Dr2MXUluiwFAJcHnxQIvHnYg9SUrmv33aqe',
+      client_id: this.config.CLIENT_ID,
+      client_secret: this.config.CLIENT_SECRET,
       grant_type: 'password',
       scope: ''
     };
@@ -48,7 +49,7 @@ export class AuthService {
       title: '',
       content: () => {
         // Obtem o token com as informações do formulário de login
-        this.http.post(this.oauthUrl, postData, {headers})
+        this.http.post(this.baseUrl + 'api/login', postData, {headers})
           .subscribe(
             (res) => {
               this.refresh_token = res['refresh_token'].toString();
@@ -106,6 +107,7 @@ export class AuthService {
 
   // Revoga o token e remove do localstorage
   public logout() {
+
     $.confirm({
       title: 'Logout',
       content: 'Deseja sair do sistema agora?',
@@ -163,6 +165,25 @@ export class AuthService {
           }
         );
       ;
+    });
+  }
+
+  public getInfo() {
+    return new Promise((resolve) => {
+      const headers = new HttpHeaders({
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      });
+
+      this.http.get(this.baseUrl + 'api/user', {headers})
+        .subscribe(
+          (res: any) => {
+            resolve(res);
+          },
+          (err) => {
+            resolve(false);
+          }
+        );
     });
   }
 

@@ -1,18 +1,32 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import 'jquery-slimscroll';
 import {AuthService} from "../../../services/login/auth.service";
+import {VarGlobal} from "../../../services/var-global";
 
 declare var jQuery: any;
 
 @Component({
   selector: 'navigation',
-  templateUrl: 'navigation.template.html'
+  templateUrl: 'navigation.template.html',
+  providers: [AuthService]
 })
 
 export class NavigationComponent {
 
-  constructor(private router: Router, private login: AuthService) {
+  constructor(private router: Router, private login: AuthService, public varGlobal: VarGlobal) {
+  }
+
+  ngOnInit() {
+
+    // Obtem informações basicas do usuário
+    this.login.getInfo()
+      .then((res) => {
+        this.varGlobal.USER_NAME = res['data']['name'];
+        this.varGlobal.USER_AVATAR = res['data']['avatar'];
+        // this.varGlobal.USER_GROUP = res['data']['group'];
+      });
+
   }
 
   ngAfterViewInit() {

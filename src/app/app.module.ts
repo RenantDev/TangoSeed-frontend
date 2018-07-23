@@ -23,6 +23,9 @@ import {LoginModule} from "./views/login/login.module";
 import {AuthGuard} from "./guards/auth.guard";
 import {AdminModule} from "./views/admin/admin.module";
 
+import {ConfigGlobal} from "./services/config-global";
+import {VarGlobal} from "./services/var-global";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +44,7 @@ import {AdminModule} from "./views/admin/admin.module";
     AppviewsModule,
     RouterModule.forRoot(ROUTES),
   ],
-  providers: [AuthService, AuthGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [ConfigGlobal, VarGlobal, AuthService, AuthGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule {
