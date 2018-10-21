@@ -138,6 +138,7 @@ export class AuthService {
           localStorage.setItem('token', null);
           localStorage.setItem('refresh_token', null);
           this.router.navigate(['/login']);
+
         }
       );
   }
