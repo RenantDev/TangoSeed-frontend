@@ -25,15 +25,15 @@ import {AdminModule} from "./views/admin/admin.module";
 
 import {ConfigGlobal} from "./services/config-global";
 import {VarGlobal} from "./services/var-global";
+import { TableModule } from './components/common/table/table.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-
     ProfileComponent,
-
   ],
   imports: [
+    TableModule,
     AdminModule,
     LoginModule,
     BrowserModule,
