@@ -1,58 +1,77 @@
 /*
  *
  *   INSPINIA - Responsive Admin Theme
- *   version 2.7.1
+ *   version 2.8
  *
 */
+
 // Google Fonts
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 
+// Glyphicons from Bootstrap 3.3.7
+@import "imports/glyphicons.scss";
+
 // Variables, Mixins
-@import "imports/variables";
-@import "imports/mixins";
+@import "imports/variables.scss";
+@import "imports/mixins.scss";
 
 // INSPINIA Theme Elements
-@import "imports/typography";
-@import "imports/navigation";
-@import "imports/top_navigation";
-@import "imports/buttons";
-@import "imports/badges_labels";
-@import "imports/elements";
-@import "imports/sidebar";
-@import "imports/base";
-@import "imports/pages";
-@import "imports/chat";
-@import "imports/metismenu";
-@import "imports/spinners";
+@import "imports/typography.scss";
+@import "imports/navigation.scss";
+@import "imports/top_navigation.scss";
+@import "imports/buttons.scss";
+@import "imports/badges_labels.scss";
+@import "imports/elements.scss";
+@import "imports/sidebar.scss";
+@import "imports/base.scss";
+@import "imports/pages.scss";
+@import "imports/chat.scss";
+@import "imports/metismenu.scss";
+@import "imports/spinners.scss";
 
 // Landing page styles
-@import "imports/landing";
+@import "imports/landing.scss";
 
 // RTL Support
-@import "imports/rtl";
+@import "imports/rtl.scss";
 
 // For demo only - config box style
-@import "imports/theme-config";
+@import "imports/theme-config.scss";
 
 // INSPINIA Skins
-@import "imports/skins";
-@import "imports/md-skin";
+@import "imports/skins.scss";
+@import "imports/md-skin.scss";
 
 // Media query style
-@import "imports/media";
+@import "imports/media.scss";
 
 // Custom style
 // Your custom style to override base style
-@import "imports/custom";
+@import "imports/custom.scss";
 
 // Clear layout on print mode
 @media print {
   nav.navbar-static-side {
     display: none;
   }
+
   body { overflow: visible !important; }
 
   #page-wrapper {
     margin: 0;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
