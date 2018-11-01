@@ -25,7 +25,9 @@ import {AdminModule} from "./views/admin/admin.module";
 
 import {ConfigGlobal} from "./services/config-global";
 import {VarGlobal} from "./services/var-global";
-import { TableModule } from './components/common/table/table.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule, MatPaginatorModule, MatSortModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,6 @@ import { TableModule } from './components/common/table/table.module';
     ProfileComponent,
   ],
   imports: [
-    TableModule,
     AdminModule,
     LoginModule,
     BrowserModule,
@@ -43,6 +44,10 @@ import { TableModule } from './components/common/table/table.module';
     LayoutsModule,
     AppviewsModule,
     RouterModule.forRoot(ROUTES),
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [ConfigGlobal, VarGlobal, AuthService, AuthGuard, {provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

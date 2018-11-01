@@ -21,11 +21,13 @@
               "src/favicon.ico"
             ],
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/animate.css/animate.min.css",
               "node_modules/jquery-confirm/dist/jquery-confirm.min.css",
-              "vendor/dataTables/datatables.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -35,7 +37,6 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/jquery-confirm/dist/jquery-confirm.min.js",
-              "vendor/dataTables/datatables.min.js",
               "vendor/pace/pace.min.js"
             ]
           },
@@ -90,6 +91,9 @@
               "vendor/pace/pace.min.js"
             ],
             "styles": [
+              {
+                "input": "node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+              },
               "node_modules/bootstrap/dist/css/bootstrap.css",
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/animate.css/animate.min.css",

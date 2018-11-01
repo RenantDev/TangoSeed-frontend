@@ -24,33 +24,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     this.nav.className += ' white-bg';
 
-    this.usersService.getUserList().then((res) => {
-      console.log(res['data']);
-    });
-
-    $('.dataTables-users').DataTable({
-      pageLength: 2,
-      responsive: true,
-      dom: '<"html5buttons"B>lTfgitp',
-      language: this.configGlobal.TABLE_LANG,
-      buttons: [
-        // { extend: 'copy'},
-        // {extend: 'csv'},
-        // {extend: 'excel', title: 'ExampleFile'},
-        // {extend: 'pdf', title: 'ExampleFile'},
-        //
-        // {extend: 'print',
-        //   customize: function (win){
-        //     $(win.document.body).addClass('white-bg');
-        //     $(win.document.body).css('font-size', '10px');
-        //
-        //     $(win.document.body).find('table')
-        //       .addClass('compact')
-        //       .css('font-size', 'inherit');
-        //   }
-        // }
-      ]
-    });
+    // this.usersService.getUserList().then((res) => {
+    //   console.log(res['data']);
+    // });
 
   }
 
