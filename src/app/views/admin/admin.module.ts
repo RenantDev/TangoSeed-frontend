@@ -7,6 +7,7 @@ import { ScopesComponent } from './scopes/scopes.component';
 import { MatTableModule, MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatMenuModule, MatIconModule } from '@angular/material';
 import { UserTableComponent } from './users/user-table/user-table.component';
 import { HttpClientModule } from '@angular/common/http';
+import { UserMenuComponent } from './users/user-menu/user-menu.component';
 
 @NgModule({
   imports: [
@@ -19,6 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
     MatMenuModule,
     MatIconModule
   ],
-  declarations: [UsersComponent, GroupsComponent, RolesComponent, ScopesComponent, UserTableComponent]
+  declarations: [UsersComponent, GroupsComponent, RolesComponent, ScopesComponent, UserTableComponent, UserMenuComponent]
 })
 export class AdminModule { }
