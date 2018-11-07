@@ -5,6 +5,24 @@
  *
 */
 
+.nav-header a.dropdown-toggle {
+  color: #fff;
+  margin-top: 10px;
+}
+
+.nav-header a.dropdown-toggle:hover {
+  color: #fff;
+}
+
+.nav-header a.dropdown-toggle .text-muted {
+  color: #fff;
+  opacity: 0.8;
+}
+
+.navbar-minimalize{
+  color: #fff;
+}
+
 // Main colors
 $skin-1-color: #0e9aef;
 $skin-1-nav-bg: #3e495f;
