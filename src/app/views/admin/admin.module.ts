@@ -8,11 +8,14 @@ import { MatTableModule, MatPaginatorModule, MatSortModule, MatProgressSpinnerMo
 import { UserTableComponent } from './users/user-table/user-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserMenuComponent } from './users/user-menu/user-menu.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -20,6 +23,13 @@ import { UserMenuComponent } from './users/user-menu/user-menu.component';
     MatMenuModule,
     MatIconModule
   ],
-  declarations: [UsersComponent, GroupsComponent, RolesComponent, ScopesComponent, UserTableComponent, UserMenuComponent]
+  declarations: [
+    UsersComponent,
+    GroupsComponent,
+    RolesComponent,
+    ScopesComponent,
+    UserTableComponent,
+    UserMenuComponent
+  ]
 })
 export class AdminModule { }

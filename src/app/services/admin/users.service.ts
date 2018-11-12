@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Router } from "@angular/router";
 import { ConfigGlobal } from "../config-global";
+import { Subject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +29,9 @@ export class UsersService {
           }
         );
     });
+  }
+
+  createUser(user: any) {
+
   }
 }
