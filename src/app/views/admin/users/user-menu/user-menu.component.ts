@@ -26,28 +26,6 @@ export class UserMenuComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) { }
 
   ngOnInit() {
-    // this.formulario = new FormGroup({
-    //   nome: new FormControl(null),
-    //   email: new FormControl(null),
-    //   senha: new FormControl(null)
-    // });
-
-    // this.formulario = this.formBuilder.group({
-    //   name: [null, [
-    //     Validators.minLength(3),
-    //     Validators.maxLength(60),
-    //     Validators.required
-    //   ]],
-    //   email: [null, [
-    //     Validators.required,
-    //     Validators.email,
-    //   ]],
-    //   password: [null, [
-    //     Validators.required,
-    //     Validators.minLength(3),
-    //     Validators.maxLength(60),
-    //   ]],
-    // });
     this.formulario = this.formBuilder.group({
       name: null,
       email: null,
@@ -64,7 +42,6 @@ export class UserMenuComponent implements OnInit {
     });
 
     this.formulario.disable();
-    console.log(this.emailCss);
 
     this.http.post(this.config.GLOBAL_URL + 'api/admin/users', this.formulario.value, { headers })
       .subscribe(data => {

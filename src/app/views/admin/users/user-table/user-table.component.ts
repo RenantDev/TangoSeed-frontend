@@ -4,6 +4,7 @@ import { MatPaginator, MatSort } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ConfigGlobal } from 'app/services/config-global';
+import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
 
 /**
  * @title Table retrieving data through HTTP
@@ -23,11 +24,14 @@ export class UserTableComponent implements OnInit {
   isRateLimitReached = false;
   pageSize = 15;
   current_page = 1;
+  pageSizeOptions = 15;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private http: HttpClient, private configGlobal: ConfigGlobal) { }
+
+  editModal = new EditUserModalComponent;
 
   ngOnInit() {
 
@@ -36,13 +40,15 @@ export class UserTableComponent implements OnInit {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.direction, this.sort.active,  this.paginator.pageIndex);
+            this.sort.direction, this.sort.active, this.paginator.pageIndex, this.pageSize
+          );
         }),
         map(data => {
           // Flip flag to show that loading has finished.
@@ -62,6 +68,11 @@ export class UserTableComponent implements OnInit {
         })
       ).subscribe(data => this.data = data);
   }
+
+  editUserModal(id) {
+    this.editModal.openModal(id);
+  }
+
 }
 
 export interface UserList {
@@ -80,20 +91,26 @@ export interface User {
 export class ExampleHttpDao {
   constructor(private http: HttpClient, private config: ConfigGlobal) { }
 
-  getRepoIssues(sort: string, order: string, page: number): Observable<UserList> {
+  private pgSize: any;
+
+  getRepoIssues(sort: string, order: string, page: number, pageSizeOptions: number): Observable<UserList> {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
 
-    if(order === undefined){
+    if (order === undefined) {
       order = '';
     }
 
-    const href = this.config.GLOBAL_URL + 'api/admin/users';
-    const requestUrl = href + `?orderBy=${order}&sortedBy=${sort}&page=${page + 1}`;
+    if (pageSizeOptions === undefined) {
+      this.pgSize = '';
+    } else {
+      this.pgSize = '&limit=' + pageSizeOptions;
+    }
 
-    console.log(requestUrl);
+    const href = this.config.GLOBAL_URL + 'api/admin/users';
+    const requestUrl = href + `?orderBy=${order}&sortedBy=${sort}&page=${page + 1}${this.pgSize}`;
 
     return this.http.get<UserList>(requestUrl, { headers });
   }

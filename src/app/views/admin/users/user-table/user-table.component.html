@@ -8,8 +8,7 @@
         Não foi possível carregar a tabela, tente novamente mais tarde.
       </div>
     </div>
-    <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="id" matSortDisableClear
-      matSortDirection="asc">
+    <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="id" matSortDisableClear matSortDirection="asc">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -47,7 +46,7 @@
               Ação
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item>
+              <button (click)="editUserModal([row.id])" data-toggle="modal" data-target="#editUser" mat-menu-item>
                 <mat-icon>edit</mat-icon>
                 <span>Editar</span>
               </button>
@@ -69,5 +68,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator [length]="resultsLength" [pageSize]="[pageSize]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 15, 30]"  showFirstLastButtons></mat-paginator>
 </div>
+
+<app-edit-user-modal></app-edit-user-modal>

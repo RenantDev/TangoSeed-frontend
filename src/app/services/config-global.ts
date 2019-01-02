@@ -1,10 +1,10 @@
 export class ConfigGlobal {
   // Geral
-  GLOBAL_URL: string = 'http://api.tangoseed.com.br/';
+  GLOBAL_URL: string = 'https://tangoseed.com.br/';
 
   // Laravel Passport
   CLIENT_ID: number = 1;
-  CLIENT_SECRET: string = 'DVjAQvwiJOWIeYyxcgUPyjSUx7BChRNHHrL2lVKO';
+  CLIENT_SECRET: string = 'k4um4xXxWJtxK1f4Z84KKQTNGriWEg6C1i6QcWrK';
 
   // Traduçao de tabelas
   TABLE_PTBR: any = {

@@ -9,6 +9,7 @@ import { UserTableComponent } from './users/user-table/user-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserMenuComponent } from './users/user-menu/user-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EditUserModalComponent } from './users/user-table/edit-user-modal/edit-user-modal.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     RolesComponent,
     ScopesComponent,
     UserTableComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    EditUserModalComponent
   ]
 })
 export class AdminModule { }
