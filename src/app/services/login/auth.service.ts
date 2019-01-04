@@ -54,19 +54,19 @@ export class AuthService {
               localStorage.setItem('refresh_token', this.refresh_token);
 
               this.access_token = res['access_token'].toString();
-              localStorage.setItem('token', this.access_token);
+              sessionStorage.setItem('token', this.access_token);
 
               // Obtem informações basicas do usuário
               this.getInfo()
                 .then((res) => {
                   sessionStorage.setItem('menu', JSON.stringify(res['menu']));
-                });
+                  // Fecha todos os alertas referentes ao objeto refobj
 
-              // Fecha todos os alertas referentes ao objeto refobj
-              this.router.navigate(['/dashboard']);
-              $.each(refobj, function (i, a) {
-                a.close(); // you fire close method of all confirms.
-              });
+                  this.router.navigate(['/dashboard']);
+                  $.each(refobj, function (i, a) {
+                    a.close(); // you fire close method of all confirms.
+                  });
+                });
             },
             (err) => {
               $.alert({
@@ -131,21 +131,22 @@ export class AuthService {
 
     const headers = new HttpHeaders({
       'Accept': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
     this.http.get(this.config.GLOBAL_URL + 'api/logout', { headers })
       .subscribe(
         res => {
 
-          localStorage.setItem('token', null);
-          localStorage.setItem('refresh_token', null);
+          sessionStorage.clear();
+          localStorage.clear();
+
           this.router.navigate(['/login']);
         },
         err => {
-          localStorage.setItem('token', null);
-          localStorage.setItem('refresh_token', null);
-          this.router.navigate(['/login']);
+          sessionStorage.clear();
+          localStorage.clear();
 
+          this.router.navigate(['/login']);
         }
       );
   }
@@ -155,7 +156,7 @@ export class AuthService {
     return new Promise((resolve) => {
       const headers = new HttpHeaders({
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
       });
 
       this.http.get(this.config.GLOBAL_URL + 'api/status', { headers })
@@ -177,7 +178,7 @@ export class AuthService {
     return new Promise((resolve) => {
       const headers = new HttpHeaders({
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
       });
 
       this.http.get(this.config.GLOBAL_URL + 'api/user', { headers })
@@ -195,6 +196,6 @@ export class AuthService {
 
   // Obitem o token que ja foi gerado pelo usuário
   public getToken() {
-    return localStorage.getItem('token');
+    return sessionStorage.getItem('token');
   }
 }

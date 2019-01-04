@@ -38,7 +38,7 @@ export class UserMenuComponent implements OnInit {
     // console.log(this.formulario.value);
     const headers = new HttpHeaders({
       'Accept': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
 
     this.formulario.disable();

@@ -95,7 +95,7 @@ export class ExampleHttpDao {
   getRepoIssues(sort: string, order: string, page: number, pageSizeOptions: number): Observable<UserList> {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
 
     if (order === undefined) {
