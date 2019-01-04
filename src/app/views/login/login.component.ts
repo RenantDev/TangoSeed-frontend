@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {Login} from './login';
-import {AuthService} from '../../services/login/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Login } from './login';
+import { AuthService } from '../../services/login/auth.service';
+import { VarGlobal } from 'app/services/var-global';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   // Efetua um novo login
   public loginUser() {
-    this.authService.getAccessToken(this.login)
+    this.authService.getAccessToken(this.login);
   }
 
   // Sai do sistema

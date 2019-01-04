@@ -4,7 +4,7 @@ export class ConfigGlobal {
 
   // Laravel Passport
   CLIENT_ID: number = 1;
-  CLIENT_SECRET: string = 'k4um4xXxWJtxK1f4Z84KKQTNGriWEg6C1i6QcWrK';
+  CLIENT_SECRET: string = 'QF4JSlKGxiht5vZfxDtiOPVq8HCQ7oNQ7wvQY1g9';
 
   // Traduçao de tabelas
   TABLE_PTBR: any = {

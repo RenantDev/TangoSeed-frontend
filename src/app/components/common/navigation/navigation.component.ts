@@ -17,7 +17,11 @@ export class NavigationComponent {
   constructor(private router: Router, private login: AuthService, public varGlobal: VarGlobal) {
   }
 
+  private mainMenu: Array<any>;
+
   ngOnInit() {
+
+    this.mainMenu = JSON.parse(sessionStorage.getItem("menu"));
 
     // Obtem informações basicas do usuário
     this.login.getInfo()

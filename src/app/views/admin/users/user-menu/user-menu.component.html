@@ -39,9 +39,9 @@
 
             <div *ngIf="emailErrorMsg || passwordErrorMsg || nameErrorMsg" class="alert alert-danger col-sm-12">
                 <h3 class="text-danger">Erro</h3>
-                <span *ngIf="emailErrorMsg" class="col-sm-12" for="">Email: {{ emailErrorMsg }}<br></span>
-                <span *ngIf="nameErrorMsg" class="col-sm-12" for="">Nome: {{ nameErrorMsg }}<br></span>
-                <span *ngIf="passwordErrorMsg" class="col-sm-12" for="">Senha: {{ passwordErrorMsg }}<br></span>
+                <span *ngIf="emailErrorMsg" class="col-sm-12" for="">{{ emailErrorMsg }}<br></span>
+                <span *ngIf="nameErrorMsg" class="col-sm-12" for="">{{ nameErrorMsg }}<br></span>
+                <span *ngIf="passwordErrorMsg" class="col-sm-12" for="">{{ passwordErrorMsg }}<br></span>
               </div>
           </div>
 

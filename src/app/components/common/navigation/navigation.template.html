@@ -18,18 +18,22 @@
 
         </div>
       </li>
-      <li [ngClass]="{active: activeRoute('dashboard')}">
-        <a [routerLink]="['/dashboard']"><i class="fa fa-home"></i> <span class="nav-label">Dashboard</span></a>
-      </li>
-      <li [ngClass]="{active: activeRoute('admin')}">
-        <a href="#"><i class="fa fa-gears"></i> <span class="nav-label">Admin</span> <span class="fa arrow"></span> </a>
-        <ul class="nav nav-second-level collapse" [ngClass]="{in: activeRoute('admin')}">
-          <li [ngClass]="{active: activeRoute('users')}"><a [routerLink]="['/admin/users']">Usuários</a></li>
-          <li [ngClass]="{active: activeRoute('groups')}"><a [routerLink]="['/admin/groups']">Grupos</a></li>
-          <li [ngClass]="{active: activeRoute('roles')}"><a [routerLink]="['/admin/roles']">Funções</a></li>
-          <li [ngClass]="{active: activeRoute('scopes')}"><a [routerLink]="['/admin/scopes']">Extenções</a></li>
+
+      <li *ngFor="let menuItem of mainMenu" [ngClass]="{active: activeRoute(menuItem.slug)}">
+        <a *ngIf="!menuItem.children[0]" [routerLink]="['/' + menuItem.slug]">
+          <i class="fa fa-home"></i> <span class="nav-label">{{ menuItem.title }}</span>
+        </a>
+        <a *ngIf="menuItem.children[0]" href="javascript:void(0)">
+          <i class="fa fa-gears"></i> <span class="nav-label">{{ menuItem.title }}</span>
+          <span class="fa arrow"></span>
+        </a>
+        <ul *ngIf="menuItem.children[0]" class="nav nav-second-level collapse" [ngClass]="{in: activeRoute(menuItem.slug)}">
+          <li *ngFor="let children of menuItem.children" [ngClass]="{active: activeRoute(children.slug)}">
+            <a [routerLink]="['/' + menuItem.slug + '/' + children.slug]">{{ children.title }}</a>
+          </li>
         </ul>
       </li>
+
     </ul>
 
   </div>

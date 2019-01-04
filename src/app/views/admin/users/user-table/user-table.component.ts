@@ -24,7 +24,6 @@ export class UserTableComponent implements OnInit {
   isRateLimitReached = false;
   pageSize = 15;
   current_page = 1;
-  pageSizeOptions = 15;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -47,7 +46,7 @@ export class UserTableComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.direction, this.sort.active, this.paginator.pageIndex, this.pageSize
+            this.sort.direction, this.sort.active, this.paginator.pageIndex, this.paginator.pageSize
           );
         }),
         map(data => {

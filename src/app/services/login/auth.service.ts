@@ -1,8 +1,9 @@
-import {Injectable} from '@angular/core';
-import {Login} from '../../views/login/login';
-import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
-import {Router} from "@angular/router";
-import {ConfigGlobal} from "../config-global";
+import { Injectable } from '@angular/core';
+import { Login } from '../../views/login/login';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { Router } from "@angular/router";
+import { ConfigGlobal } from "../config-global";
+import { VarGlobal } from '../var-global';
 
 declare var $: any;
 
@@ -12,7 +13,7 @@ declare var $: any;
 
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router, private config: ConfigGlobal) {
+  constructor(private http: HttpClient, private router: Router, private config: ConfigGlobal, private varGlobal: VarGlobal) {
   }
 
   private access_token = null;
@@ -46,7 +47,7 @@ export class AuthService {
       title: '',
       content: () => {
         // Obtem o token com as informações do formulário de login
-        this.http.post(this.config.GLOBAL_URL + 'api/login', postData, {headers})
+        this.http.post(this.config.GLOBAL_URL + 'api/login', postData, { headers })
           .subscribe(
             (res) => {
               this.refresh_token = res['refresh_token'].toString();
@@ -54,6 +55,12 @@ export class AuthService {
 
               this.access_token = res['access_token'].toString();
               localStorage.setItem('token', this.access_token);
+
+              // Obtem informações basicas do usuário
+              this.getInfo()
+                .then((res) => {
+                  sessionStorage.setItem('menu', JSON.stringify(res['menu']));
+                });
 
               // Fecha todos os alertas referentes ao objeto refobj
               this.router.navigate(['/dashboard']);
@@ -126,7 +133,7 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token'),
     });
-    this.http.get(this.config.GLOBAL_URL + 'api/logout', {headers})
+    this.http.get(this.config.GLOBAL_URL + 'api/logout', { headers })
       .subscribe(
         res => {
 
@@ -151,7 +158,7 @@ export class AuthService {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       });
 
-      this.http.get(this.config.GLOBAL_URL + 'api/status', {headers})
+      this.http.get(this.config.GLOBAL_URL + 'api/status', { headers })
         .subscribe(
           (res: any) => {
             this.status_login = res.status;
@@ -173,9 +180,9 @@ export class AuthService {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
       });
 
-      this.http.get(this.config.GLOBAL_URL + 'api/user', {headers})
+      this.http.get(this.config.GLOBAL_URL + 'api/user', { headers })
         .subscribe(
-          (res: any) => {
+          (res: Array<any>) => {
             resolve(res);
           },
           (err) => {
