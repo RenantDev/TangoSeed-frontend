@@ -21,10 +21,10 @@
 
       <li *ngFor="let menuItem of mainMenu" [ngClass]="{active: activeRoute(menuItem.slug)}">
         <a *ngIf="!menuItem.children[0]" [routerLink]="['/' + menuItem.slug]">
-          <i class="fa fa-home"></i> <span class="nav-label">{{ menuItem.title }}</span>
+          <i class="fa {{menuItem.icon}}"></i> <span class="nav-label">{{ menuItem.title }}</span>
         </a>
         <a *ngIf="menuItem.children[0]" href="javascript:void(0)">
-          <i class="fa fa-gears"></i> <span class="nav-label">{{ menuItem.title }}</span>
+          <i class="fa {{menuItem.icon}}"></i> <span class="nav-label">{{ menuItem.title }}</span>
           <span class="fa arrow"></span>
         </a>
         <ul *ngIf="menuItem.children[0]" class="nav nav-second-level collapse" [ngClass]="{in: activeRoute(menuItem.slug)}">

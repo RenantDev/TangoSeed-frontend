@@ -15,13 +15,13 @@ export class UserMenuComponent implements OnInit {
 
   formulario: FormGroup;
 
-  private nameCss: any;
-  private emailCss: any;
-  private passwordCss: any;
+  public nameCss: any;
+  public emailCss: any;
+  public passwordCss: any;
 
-  private emailErrorMsg: any;
-  private nameErrorMsg: any;
-  private passwordErrorMsg: any;
+  public emailErrorMsg: any;
+  public nameErrorMsg: any;
+  public passwordErrorMsg: any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) { }
 

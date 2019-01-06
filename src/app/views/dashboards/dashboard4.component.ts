@@ -83,6 +83,7 @@ export class Dashboard4Component implements OnDestroy, OnInit {
     }
   };
 
+  public lineChartOptions: any;
   public peityType:string = "pie";
   public peityOptions:any = { fill: ['#1ab394', '#d7d7d7', '#ffffff']};
 

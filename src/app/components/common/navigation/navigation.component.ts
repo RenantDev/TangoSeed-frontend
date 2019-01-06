@@ -17,7 +17,7 @@ export class NavigationComponent {
   constructor(private router: Router, private login: AuthService, public varGlobal: VarGlobal) {
   }
 
-  private mainMenu: Array<any>;
+  public mainMenu: Array<any>;
 
   ngOnInit() {
 

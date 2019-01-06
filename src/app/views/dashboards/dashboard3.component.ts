@@ -50,6 +50,7 @@ export class Dashboard3Component implements OnDestroy, OnInit {
     }
   ];
 
+  public lineChartOptions: any;
   public peityType1:string = "bar";
   public peityType2:string = "line";
   public peityOptions1:any = { fill: ["#1ab394", "#d7d7d7"], width:100};

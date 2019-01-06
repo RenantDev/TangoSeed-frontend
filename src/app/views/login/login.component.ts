@@ -11,7 +11,7 @@ import { VarGlobal } from 'app/services/var-global';
 })
 export class LoginComponent implements OnInit {
 
-  private login: Login = new Login();
+  public login: Login = new Login();
 
   constructor(private authService: AuthService) {
     // Obtem o token no navegador
