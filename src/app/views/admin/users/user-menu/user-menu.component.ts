@@ -27,9 +27,12 @@ export class UserMenuComponent implements OnInit {
   public passwordErrorMsg: any;
   public groupErrorMsg: any;
 
+  public successMsg: any;
+
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) { }
 
   ngOnInit() {
+    // Define os campos do formulario
     this.formulario = this.formBuilder.group({
       name: null,
       email: null,
@@ -37,33 +40,61 @@ export class UserMenuComponent implements OnInit {
       group: null
     });
 
+    // Define os grupos de usuários
     this.getSelectGroup();
   }
 
+  // Cadastra novo usuário
   onSubmit() {
-    // console.log(this.formulario.value);
+    // Define o cabeçario do POST
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
 
+    // Desativa os campos do formulário temporariamente
     this.formulario.disable();
 
+    // Envia o POST para o backend
     this.http.post(this.config.GLOBAL_URL + 'api/admin/users', this.formulario.value, { headers })
       .subscribe(data => {
-        this.formulario.enable();
-        this.formulario.reset();
+
+        // Remove qualquer msg de erro na tela
         this.applyCssError();
+
+        // Cadastro realizado com sucesso
+        this.applyCssSuccess(true);
+
+        // Limpa o formulário
+        this.formulario.reset();
+
+        // Reativa os campos do formulário
+        this.formulario.enable();
+
       },
         (error: any) => {
+          // Exibe os erros na tela
           this.applyCssError(error);
+
+          // Reativa os campos do formulário
           this.formulario.enable();
         }
       );
   }
 
+  // Exibe ou não o sucesso do cadastro
+  applyCssSuccess(success = false) {
+    if (success) {
+      this.successMsg = true;
+    } else {
+      this.successMsg = false;
+    }
+  }
+
+  // Exibe ou não a lista de erros de cadastro
   applyCssError(error = null) {
 
+    this.applyCssSuccess();
     if (error === null) {
       // Caso nenhum erro seja encontrado reinicia o CSS
       this.resetImputError();
@@ -116,6 +147,7 @@ export class UserMenuComponent implements OnInit {
     }
   }
 
+  // Limpa a lista de erros
   resetImputError() {
     this.emailCss = {
       'error': false
@@ -138,11 +170,13 @@ export class UserMenuComponent implements OnInit {
     this.groupErrorMsg = false;
   }
 
+  // Reinicia o formulário de cadastro
   resetForm() {
     this.resetImputError();
     this.formulario.reset();
   }
 
+  // Busca os grupos de usuários do sistema
   getSelectGroup() {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
