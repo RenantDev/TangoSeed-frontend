@@ -15,13 +15,17 @@ export class UserMenuComponent implements OnInit {
 
   formulario: FormGroup;
 
+  public groups: any;
+
   public nameCss: any;
   public emailCss: any;
   public passwordCss: any;
+  public groupCss: any;
 
   public emailErrorMsg: any;
   public nameErrorMsg: any;
   public passwordErrorMsg: any;
+  public groupErrorMsg: any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) { }
 
@@ -30,8 +34,10 @@ export class UserMenuComponent implements OnInit {
       name: null,
       email: null,
       password: null,
+      group: null
     });
 
+    this.getSelectGroup();
   }
 
   onSubmit() {
@@ -50,34 +56,17 @@ export class UserMenuComponent implements OnInit {
         this.applyCssError();
       },
         (error: any) => {
-          console.log(error['error']['errors']['email']);
-
           this.applyCssError(error);
-
           this.formulario.enable();
-          // console.log(error.statusText);
         }
       );
   }
 
   applyCssError(error = null) {
 
-    console.log(error);
-
     if (error === null) {
-      this.emailCss = {
-        'error': false
-      };
-      this.emailErrorMsg = false;
-      this.nameCss = {
-        'error': false
-      };
-      this.nameErrorMsg = false;
-      this.passwordCss = {
-        'error': false
-      };
-      this.passwordErrorMsg = false;
-
+      // Caso nenhum erro seja encontrado reinicia o CSS
+      this.resetImputError();
     } else {
 
       if (typeof error['error']['errors']['email'] !== 'undefined') {
@@ -113,11 +102,59 @@ export class UserMenuComponent implements OnInit {
         };
         this.passwordErrorMsg = false;
       }
+      if (typeof error['error']['errors']['group'] !== 'undefined') {
+        this.groupCss = {
+          'error': true
+        };
+        this.groupErrorMsg = error['error']['errors']['group'];
+      } else {
+        this.groupCss = {
+          'error': false
+        };
+        this.groupErrorMsg = false;
+      }
     }
   }
 
+  resetImputError() {
+    this.emailCss = {
+      'error': false
+    };
+    this.emailErrorMsg = false;
+
+    this.nameCss = {
+      'error': false
+    };
+    this.nameErrorMsg = false;
+
+    this.passwordCss = {
+      'error': false
+    };
+    this.passwordErrorMsg = false;
+
+    this.groupCss = {
+      'error': false
+    };
+    this.groupErrorMsg = false;
+  }
+
   resetForm() {
+    this.resetImputError();
     this.formulario.reset();
+  }
+
+  getSelectGroup() {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    });
+
+    const url = this.config.GLOBAL_URL + 'api/admin/groups/list';
+
+    this.http.get(url, { headers })
+      .subscribe(data => {
+        this.groups = data;
+      });
   }
 
 }
