@@ -68,7 +68,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 15, 30]"  showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 15, 30]" [pageSize]="pageSize"  showFirstLastButtons></mat-paginator>
 </div>
 
 <app-edit-user-modal></app-edit-user-modal>
