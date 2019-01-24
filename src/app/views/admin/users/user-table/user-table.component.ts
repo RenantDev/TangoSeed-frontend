@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { MatPaginator, MatSort, MatFormField } from '@angular/material';
 import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ConfigGlobal } from 'app/services/config-global';
@@ -14,7 +14,7 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.css']
 })
-export class UserTableComponent implements OnInit {
+export class UserTableComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'menu'];
   exampleDatabase: ExampleHttpDao | null;
   data: User[] = [];
@@ -25,8 +25,12 @@ export class UserTableComponent implements OnInit {
   pageSize = 15;
   current_page = 1;
 
+  selectValueOption = null;
+  inputValue = null;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatFormField) search: MatFormField;
 
   constructor(private http: HttpClient, private configGlobal: ConfigGlobal) { }
 
@@ -39,6 +43,7 @@ export class UserTableComponent implements OnInit {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
+    this.tableRefresh();
 
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
@@ -46,7 +51,12 @@ export class UserTableComponent implements OnInit {
         switchMap(() => {
           this.isLoadingResults = true;
           return this.exampleDatabase!.getRepoIssues(
-            this.sort.direction, this.sort.active, this.paginator.pageIndex, this.paginator.pageSize
+            this.sort.direction,
+            this.sort.active,
+            this.paginator.pageIndex,
+            this.paginator.pageSize,
+            this.selectValueOption,
+            this.inputValue
           );
         }),
         map(data => {
@@ -66,10 +76,39 @@ export class UserTableComponent implements OnInit {
           return observableOf([]);
         })
       ).subscribe(data => this.data = data);
+
   }
 
+  ngOnDestroy() {
+  }
+
+  // Edita usuário do sistema
   editUserModal(id) {
+    // Abre model e busca a informação do usuário no sistema de acordo com o ID
     this.editModal.openModal(id);
+  }
+
+  onSubmit(){
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
+
+  tableRefresh(reset = false) {
+
+    if (reset) {
+      this.selectValueOption = null;
+      this.inputValue = null;
+    }
+    this.paginator._changePageSize(this.paginator.pageSize);
+
+  }
+
+  applyFilterSelect(selectValue: string) {
+    this.selectValueOption = selectValue.trim().toLowerCase();
+  }
+
+  // Filtro de usuários do sistema
+  applyFilterInput(filterValue: string) {
+    this.inputValue = filterValue.trim().toLowerCase();
   }
 
 }
@@ -92,14 +131,22 @@ export class ExampleHttpDao {
 
   private pgSize: any;
 
-  getRepoIssues(sort: string, order: string, page: number, pageSizeOptions: number): Observable<UserList> {
+  getRepoIssues(sort: string, order: string, page: number, pageSizeOptions: number, find: string, selectValueOption: string): Observable<UserList> {
     const headers = new HttpHeaders({
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
 
+    if (find === undefined || find === '' || find === null || selectValueOption === null) {
+      find = '';
+    } else {
+      find = 'search=' + selectValueOption + '&searchFields=' + find + ':like&';
+    }
+
     if (order === undefined) {
       order = '';
+    } else {
+      order = 'orderBy=' + order + '&';
     }
 
     if (pageSizeOptions === undefined) {
@@ -109,8 +156,9 @@ export class ExampleHttpDao {
     }
 
     const href = this.config.GLOBAL_URL + 'api/admin/users';
-    const requestUrl = href + `?orderBy=${order}&sortedBy=${sort}&page=${page + 1}${this.pgSize}`;
+    const requestUrl = href + `?` + find + `${order}sortedBy=${sort}&page=${page + 1}${this.pgSize}`;
 
     return this.http.get<UserList>(requestUrl, { headers });
   }
+
 }

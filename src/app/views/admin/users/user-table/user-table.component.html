@@ -1,3 +1,33 @@
+<div class="m-b-md">
+  <div class="row">
+    <div class="col-md-3 m-b-xs">
+      <app-user-menu></app-user-menu>
+    </div>
+    <div class="col-md-9">
+      <form (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="col-md-3 m-b-xs">
+            <select class="form-control" (change)="applyFilterSelect($event.target.value)">
+              <option value="" selected disabled hidden>Selecione uma coluna</option>
+              <option value="id">ID</option>
+              <option value="name">Nome</option>
+              <option value="email">Email / Login</option>
+            </select>
+          </div>
+          <div class="col-md-3 m-b-xs">
+            <input class="form-control" (keyup)="applyFilterInput($event.target.value)" placeholder="Filter">
+          </div>
+          <div class="col-md-3 m-b-xs">
+            <button type="submit" class="btn btn-primary form-control" (click)="tableRefresh()">Buscar</button>
+          </div>
+          <div class="col-md-3 m-b-xs">
+            <button class="btn btn-warning form-control" (click)="tableRefresh(true)" type="reset">Reset</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 <div class="app-user-table mat-elevation-z8">
 
   <div class="example-table-container">
@@ -8,7 +38,9 @@
         Não foi possível carregar a tabela, tente novamente mais tarde.
       </div>
     </div>
-    <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="id" matSortDisableClear matSortDirection="asc">
+
+    <table mat-table [dataSource]="data" class="example-table" matSort matSortActive="id" matSortDisableClear
+      matSortDirection="asc">
       <!-- ID Column -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -23,7 +55,7 @@
 
       <!-- Email Column -->
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Email / Login</th>
         <td mat-cell *matCellDef="let row">{{row.email}}</td>
       </ng-container>
 
@@ -67,7 +99,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 15, 30]" [pageSize]="pageSize"  showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="resultsLength" [pageSizeOptions]="[5, 15, 30]" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
 </div>
 
 <app-edit-user-modal></app-edit-user-modal>
