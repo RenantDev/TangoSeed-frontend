@@ -5,6 +5,8 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 import { catchError, map, startWith, switchMap } from 'rxjs/operators';
 import { ConfigGlobal } from 'app/services/config-global';
 import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
+import {User} from '../user';
+import { EditUserModalServiceService } from './edit-user-modal/edit-user-modal-service.service';
 
 /**
  * @title Table retrieving data through HTTP
@@ -15,6 +17,10 @@ import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.compon
   styleUrls: ['./user-table.component.css']
 })
 export class UserTableComponent implements OnInit, OnDestroy {
+
+  public userEdit: User;
+  editUserService: EditUserModalServiceService;
+
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'menu'];
   exampleDatabase: ExampleHttpDao | null;
   data: User[] = [];
@@ -34,7 +40,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   constructor(private http: HttpClient, private configGlobal: ConfigGlobal) { }
 
-  editModal = new EditUserModalComponent;
 
   ngOnInit() {
 
@@ -82,13 +87,17 @@ export class UserTableComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  // editModal = new EditUserModalComponent;
   // Edita usuário do sistema
   editUserModal(id) {
     // Abre model e busca a informação do usuário no sistema de acordo com o ID
-    this.editModal.openModal(id);
+    // editModal.openModal(id);
+    this.userEdit.id = id;
+    // this.userEdit = this.editUserService.getUserInfo(this.userEdit);
+    console.log(this.editUserService.getUserInfo(this.userEdit));
   }
 
-  onSubmit(){
+  onSubmit() {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 
@@ -118,12 +127,12 @@ export interface UserList {
   total_count: number;
 }
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  status: number;
-}
+// export interface User {
+//   id: number;
+//   name: string;
+//   email: string;
+//   status: number;
+// }
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDao {

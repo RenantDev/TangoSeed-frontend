@@ -34,10 +34,10 @@ export class UserMenuComponent implements OnInit {
   ngOnInit() {
     // Define os campos do formulario
     this.formulario = this.formBuilder.group({
-      name: null,
-      email: null,
-      password: null,
-      group: null
+      name: new FormControl(),
+      email: new FormControl(),
+      password: new FormControl(),
+      group: new FormControl()
     });
 
     // Define os grupos de usuários

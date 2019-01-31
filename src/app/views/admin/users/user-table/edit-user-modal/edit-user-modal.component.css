@@ -1,0 +1,24 @@
+.modal-edit-user-email{
+  width: 350px;
+  margin: 0 auto 23px auto;
+}
+
+.modal-edit-user-name{
+  width: 350px;
+  margin: 0 auto 23px auto;
+}
+
+.modal-edit-user-pass{
+  width: 350px;
+  margin: 0 auto 23px auto;
+}
+
+.modal-edit-user-group{
+  width: 350px;
+  margin: 0 auto;
+}
+
+.modal-alert-center{
+  margin: 0 auto;
+  min-width: 275px;
+}
