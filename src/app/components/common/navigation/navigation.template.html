@@ -27,7 +27,7 @@
           <i class="fa {{menuItem.icon}}"></i> <span class="nav-label">{{ menuItem.title }}</span>
           <span class="fa arrow"></span>
         </a>
-        <ul *ngIf="menuItem.children[0]" class="nav nav-second-level collapse" [ngClass]="{in: activeRoute(menuItem.slug)}">
+        <ul *ngIf="menuItem.children[0]" class="nav nav-second-level" [ngClass]="{in: activeRoute(menuItem.slug)}">
           <li *ngFor="let children of menuItem.children" [ngClass]="{active: activeRoute(children.slug)}">
             <a [routerLink]="['/' + menuItem.slug + '/' + children.slug]">{{ children.title }}</a>
           </li>

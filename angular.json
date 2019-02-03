@@ -28,6 +28,7 @@
               "node_modules/font-awesome/css/font-awesome.css",
               "node_modules/animate.css/animate.min.css",
               "node_modules/jquery-confirm/dist/jquery-confirm.min.css",
+              "node_modules/metismenu/dist/metisMenu.css",
               "src/styles.scss"
             ],
             "scripts": [
