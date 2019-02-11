@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import 'jquery-slimscroll';
-import {AuthService} from '../../../services/login/auth.service';
-import {VarGlobal} from '../../../services/var-global';
+import {AuthService} from "../../../services/login/auth.service";
+import {VarGlobal} from "../../../services/var-global";
 
 declare var jQuery: any;
 
@@ -12,16 +12,16 @@ declare var jQuery: any;
   providers: [AuthService]
 })
 
-export class NavigationComponent  {
-
-  public mainMenu: Array<any>;
+export class NavigationComponent {
 
   constructor(private router: Router, private login: AuthService, public varGlobal: VarGlobal) {
   }
 
+  public mainMenu: Array<any>;
+
   ngOnInit() {
 
-    this.mainMenu = JSON.parse(sessionStorage.getItem('menu'));
+    this.mainMenu = JSON.parse(sessionStorage.getItem("menu"));
 
     // Obtem informações basicas do usuário
     this.login.getInfo()
@@ -36,7 +36,7 @@ export class NavigationComponent  {
   ngAfterViewInit() {
     jQuery('#side-menu').metisMenu();
 
-    if (jQuery('body').hasClass('fixed-sidebar')) {
+    if (jQuery("body").hasClass('fixed-sidebar')) {
       jQuery('.sidebar-collapse').slimscroll({
         height: '100%'
       })
