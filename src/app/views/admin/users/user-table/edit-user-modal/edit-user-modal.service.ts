@@ -9,7 +9,7 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class EditUserModalServiceService {
+export class EditUserModalService {
 
   constructor(private http: HttpClient, private config: ConfigGlobal) { }
 

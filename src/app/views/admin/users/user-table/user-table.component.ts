@@ -1,12 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { MatPaginator, MatSort, MatFormField } from '@angular/material';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { ConfigGlobal } from 'app/services/config-global';
-import { EditUserModalComponent } from './edit-user-modal/edit-user-modal.component';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {MatPaginator, MatSort, MatFormField} from '@angular/material';
+import {merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {ConfigGlobal} from 'app/services/config-global';
 import {User} from '../user';
-import { EditUserModalServiceService } from './edit-user-modal/edit-user-modal-service.service';
+import {EditUserModalComponent} from './edit-user-modal/edit-user-modal.component';
 
 /**
  * @title Table retrieving data through HTTP
@@ -18,11 +17,14 @@ import { EditUserModalServiceService } from './edit-user-modal/edit-user-modal-s
 })
 export class UserTableComponent implements OnInit, OnDestroy {
 
-  public userEdit: User;
-  editUserService: EditUserModalServiceService;
+// Variaveis de Edição do usuário
+  editUser: any;
+  userEditing: any;
+  editModal: any;
 
+  // Variaveis da Tabela
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'menu'];
-  exampleDatabase: ExampleHttpDao | null;
+  usersList: AdminUsersHttpDao | null;
   data: User[] = [];
 
   resultsLength = 0;
@@ -38,12 +40,13 @@ export class UserTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatFormField) search: MatFormField;
 
-  constructor(private http: HttpClient, private configGlobal: ConfigGlobal) { }
+  constructor(private http: HttpClient, private configGlobal: ConfigGlobal ) {
+  }
 
 
   ngOnInit() {
 
-    this.exampleDatabase = new ExampleHttpDao(this.http, this.configGlobal);
+    this.usersList = new AdminUsersHttpDao(this.http, this.configGlobal);
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -55,7 +58,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getRepoIssues(
+          return this.usersList!.getRepoIssues(
             this.sort.direction,
             this.sort.active,
             this.paginator.pageIndex,
@@ -91,10 +94,21 @@ export class UserTableComponent implements OnInit, OnDestroy {
   // Edita usuário do sistema
   editUserModal(id) {
     // Abre model e busca a informação do usuário no sistema de acordo com o ID
-    // editModal.openModal(id);
-    this.userEdit.id = id;
-    // this.userEdit = this.editUserService.getUserInfo(this.userEdit);
-    console.log(this.editUserService.getUserInfo(this.userEdit));
+
+    this.editUser = new AdminUsersHttpDao(this.http, this.configGlobal);
+    console.log(id);
+    this.editUser!.getUserInfo(id).subscribe(
+      result => {
+        this.userEditing = result;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        this.editModal = new EditUserModalComponent();
+        this.editModal.openM(this.userEditing.data);
+      }
+    );
   }
 
   onSubmit() {
@@ -127,18 +141,13 @@ export interface UserList {
   total_count: number;
 }
 
-// export interface User {
-//   id: number;
-//   name: string;
-//   email: string;
-//   status: number;
-// }
-
 /** An example database that the data source uses to retrieve data for the table. */
-export class ExampleHttpDao {
-  constructor(private http: HttpClient, private config: ConfigGlobal) { }
+export class AdminUsersHttpDao {
 
   private pgSize: any;
+
+  constructor(private http: HttpClient, private config: ConfigGlobal) {
+  }
 
   getRepoIssues(sort: string, order: string, page: number, pageSizeOptions: number, find: string, selectValueOption: string): Observable<UserList> {
     const headers = new HttpHeaders({
@@ -167,7 +176,18 @@ export class ExampleHttpDao {
     const href = this.config.GLOBAL_URL + 'api/admin/users';
     const requestUrl = href + `?` + find + `${order}sortedBy=${sort}&page=${page + 1}${this.pgSize}`;
 
-    return this.http.get<UserList>(requestUrl, { headers });
+    return this.http.get<UserList>(requestUrl, {headers});
+  }
+
+  getUserInfo(userID: number): Observable<User> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    });
+
+    const url = this.config.GLOBAL_URL + 'api/admin/users/' + userID;
+
+    return this.http.get<User>(url, {headers});
   }
 
 }

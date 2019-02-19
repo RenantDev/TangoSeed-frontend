@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Login } from '../../views/login/login';
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Router } from "@angular/router";
-import { ConfigGlobal } from "../config-global";
-import { VarGlobal } from '../var-global';
+import {Injectable} from '@angular/core';
+import {Login} from '../../views/login/login';
+import {HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
+import {Router} from '@angular/router';
+import {ConfigGlobal} from '../config-global';
+import {VarGlobal} from '../var-global';
 
 declare var $: any;
 
@@ -13,13 +13,13 @@ declare var $: any;
 
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router, private config: ConfigGlobal, private varGlobal: VarGlobal) {
-  }
-
   private access_token = null;
   private refresh_token = null;
 
   private status_login: boolean;
+
+  constructor(private http: HttpClient, private router: Router, private config: ConfigGlobal, private varGlobal: VarGlobal) {
+  }
 
   public getAccessToken(login: Login) {
 
@@ -40,14 +40,14 @@ export class AuthService {
     };
 
     // Cria um objeto de referencia para todos os alertas
-    var refobj = [];
+    const refobj = [];
 
     // Adicionar um alerta no objeto de referencia
     refobj.push($.alert({
       title: '',
       content: () => {
         // Obtem o token com as informações do formulário de login
-        this.http.post(this.config.GLOBAL_URL + 'api/login', postData, { headers })
+        this.http.post(this.config.GLOBAL_URL + 'api/login', postData, {headers})
           .subscribe(
             (res) => {
               this.refresh_token = res['refresh_token'].toString();
@@ -70,7 +70,7 @@ export class AuthService {
             },
             (err) => {
               $.alert({
-                title: "<span style='text-align: center'><strong>Erro!</strong></span>",
+                title: '<span style=\'text-align: center\'><strong>Erro!</strong></span>',
                 content: err.error.message,
                 buttons: {
                   ok: {
@@ -133,7 +133,7 @@ export class AuthService {
       'Accept': 'application/json',
       'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
-    this.http.get(this.config.GLOBAL_URL + 'api/logout', { headers })
+    this.http.get(this.config.GLOBAL_URL + 'api/logout', {headers})
       .subscribe(
         res => {
 
@@ -159,7 +159,7 @@ export class AuthService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
       });
 
-      this.http.get(this.config.GLOBAL_URL + 'api/status', { headers })
+      this.http.get(this.config.GLOBAL_URL + 'api/status', {headers})
         .subscribe(
           (res: any) => {
             this.status_login = res.status;
@@ -181,7 +181,7 @@ export class AuthService {
         'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
       });
 
-      this.http.get(this.config.GLOBAL_URL + 'api/user', { headers })
+      this.http.get(this.config.GLOBAL_URL + 'api/user', {headers})
         .subscribe(
           (res: Array<any>) => {
             resolve(res);

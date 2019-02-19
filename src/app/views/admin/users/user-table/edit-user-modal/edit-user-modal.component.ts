@@ -1,9 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { UsersService } from 'app/services/admin/users.service';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { ConfigGlobal } from 'app/services/config-global';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-edit-user-modal',
@@ -12,23 +7,15 @@ import { Router } from '@angular/router';
 })
 export class EditUserModalComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
 
-
   }
 
-  openModal(id) {
-
-  }
-
-  editUser() {
-
-  }
-
-  onSubmit() {
-
+  openM(userInfo: any) {
+    console.log(userInfo);
   }
 
 
