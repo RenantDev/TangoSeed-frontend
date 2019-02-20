@@ -6,6 +6,7 @@ import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {ConfigGlobal} from 'app/services/config-global';
 import {User} from '../user';
 import {EditUserModalComponent} from './edit-user-modal/edit-user-modal.component';
+import {FormBuilder} from '@angular/forms';
 
 /**
  * @title Table retrieving data through HTTP
@@ -20,7 +21,6 @@ export class UserTableComponent implements OnInit, OnDestroy {
 // Variaveis de Edição do usuário
   editUser: any;
   userEditing: any;
-  editModal: any;
 
   // Variaveis da Tabela
   displayedColumns: string[] = ['id', 'name', 'email', 'status', 'menu'];
@@ -36,11 +36,13 @@ export class UserTableComponent implements OnInit, OnDestroy {
   selectValueOption = null;
   inputValue = null;
 
+  @ViewChild(EditUserModalComponent) editModal: EditUserModalComponent;
+
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatFormField) search: MatFormField;
 
-  constructor(private http: HttpClient, private configGlobal: ConfigGlobal ) {
+  constructor(private http: HttpClient, private configGlobal: ConfigGlobal) {
   }
 
 
@@ -93,10 +95,9 @@ export class UserTableComponent implements OnInit, OnDestroy {
   // editModal = new EditUserModalComponent;
   // Edita usuário do sistema
   editUserModal(id) {
-    // Abre model e busca a informação do usuário no sistema de acordo com o ID
-
+    // Abre model e busca a informação do usuário no sistema de acordo com o ID fornecido pela tabela.
     this.editUser = new AdminUsersHttpDao(this.http, this.configGlobal);
-    console.log(id);
+
     this.editUser!.getUserInfo(id).subscribe(
       result => {
         this.userEditing = result;
@@ -105,7 +106,7 @@ export class UserTableComponent implements OnInit, OnDestroy {
         console.log(err);
       },
       () => {
-        this.editModal = new EditUserModalComponent();
+        // Define as informações do modal
         this.editModal.openM(this.userEditing.data);
       }
     );

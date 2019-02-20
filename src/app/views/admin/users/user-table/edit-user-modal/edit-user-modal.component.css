@@ -18,6 +18,11 @@
   margin: 0 auto;
 }
 
+.modal-edit-user-status{
+  width: 350px;
+  margin: 0 auto 23px auto;
+}
+
 .modal-alert-center{
   margin: 0 auto;
   min-width: 275px;

@@ -33,7 +33,7 @@ export class EditUserModalService {
       'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
     });
 
-    const url = this.config.GLOBAL_URL + 'api/admin/user/' + user.id;
+    const url = this.config.GLOBAL_URL + 'api/admin/users/' + user.id;
 
     return this.http.get<User>(url, { headers });
   }
