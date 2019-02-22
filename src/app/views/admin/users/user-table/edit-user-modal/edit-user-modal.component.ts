@@ -13,7 +13,7 @@ export class EditUserModalComponent implements OnInit {
 
   public groups: any;
 
-  constructor(private formBuilder: FormBuilder, private edirUserService: EditUserModalService) {
+  constructor(private formBuilder: FormBuilder, private editUserService: EditUserModalService) {
 
   }
 
@@ -21,12 +21,15 @@ export class EditUserModalComponent implements OnInit {
 
     // Inicia o form de edição
     this.userEditForm = this.formBuilder.group({
+      id: new FormControl({value: null, disabled: true}),
       name: new FormControl(),
-      email: new FormControl({value: null, disabled: true}),
+      email: new FormControl(),
       password: new FormControl(),
       status: new FormControl(),
       group: new FormControl()
     });
+
+    console.log(this.formatSelectGroup());
 
   }
 
@@ -36,6 +39,7 @@ export class EditUserModalComponent implements OnInit {
 
     // Define as informações dos campos do form
     this.userEditForm.setValue({
+      id: userInfo.id,
       name: userInfo.name,
       email: userInfo.email,
       password: '',
@@ -43,6 +47,11 @@ export class EditUserModalComponent implements OnInit {
       group: ''
     });
 
+  }
+
+  formatSelectGroup() {
+    this.editUserService.getSelectGroup();
+    return this.editUserService.group;
   }
 
   onSubmit() {

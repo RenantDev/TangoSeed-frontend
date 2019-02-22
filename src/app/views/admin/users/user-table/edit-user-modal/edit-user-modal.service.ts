@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { ConfigGlobal } from 'app/services/config-global';
-import { User } from '../../user';
-import { merge, Observable, of as observableOf } from 'rxjs';
-
+import {Injectable} from '@angular/core';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
+import {ConfigGlobal} from 'app/services/config-global';
+import {User} from '../../user';
+import {Observable} from 'rxjs';
 
 
 @Injectable({
@@ -11,7 +10,10 @@ import { merge, Observable, of as observableOf } from 'rxjs';
 })
 export class EditUserModalService {
 
-  constructor(private http: HttpClient, private config: ConfigGlobal) { }
+  group: any;
+
+  constructor(private http: HttpClient, private config: ConfigGlobal) {
+  }
 
   getSelectGroup() {
     const headers = new HttpHeaders({
@@ -21,10 +23,16 @@ export class EditUserModalService {
 
     const url = this.config.GLOBAL_URL + 'api/admin/groups/list';
 
-    this.http.get(url, { headers })
+    this.http.get(url, {headers})
       .subscribe(data => {
-        // this.groups = data;
-      });
+          this.group = data;
+        },
+        err => {
+
+        },
+        () => {
+        console.log(this.group)
+        });
   }
 
   getUserInfo(user: User): Observable<User> {
@@ -35,6 +43,6 @@ export class EditUserModalService {
 
     const url = this.config.GLOBAL_URL + 'api/admin/users/' + user.id;
 
-    return this.http.get<User>(url, { headers });
+    return this.http.get<User>(url, {headers});
   }
 }
