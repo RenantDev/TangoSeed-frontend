@@ -12,30 +12,29 @@
       <form class="col-xs-12" method="get" [formGroup]="formulario" (ngSubmit)="onSubmit()" name="formEditUser" autocomplete="off" >
         <div class="modal-body">
 
-          <div class="form-group form-group-modal">
+          <div class="row">
 
-            <div class="form-group modal-new-user-email">
-              <label [ngClass]="emailCss" class="col-sm-12 control-label">E-mail / Login</label>
-              <div class="col-sm-12"><input [ngClass]="emailCss" formControlName="email" type="text" class="form-control"></div>
+            <div class="form-group col-sm-7">
+              <label [ngClass]="emailCss" class="control-label">E-mail / Login</label>
+              <input [ngClass]="emailCss" formControlName="email" type="text" class="form-control">
             </div>
 
-            <div class="form-group modal-new-user-name">
-              <label [ngClass]="nameCss" class="col-sm-12 control-label">Nome de Exibição</label>
-              <div class="col-sm-12"><input [ngClass]="nameCss" formControlName="name" type="text" class="form-control"></div>
+            <div class="form-group col-sm-5">
+              <label [ngClass]="passwordCss" class="control-label">Senha</label>
+              <input [ngClass]="passwordCss" formControlName="password" type="password" class="form-control">
             </div>
 
-            <div class="form-group modal-new-user-pass">
-              <label [ngClass]="passwordCss" class="col-sm-12 control-label">Senha</label>
-              <div class="col-sm-12"><input [ngClass]="passwordCss" formControlName="password" type="password" class="form-control"></div>
+            <div class="form-group col-sm-6">
+              <label [ngClass]="nameCss" class="control-label">Nome de Exibição</label>
+              <input [ngClass]="nameCss" formControlName="name" type="text" class="form-control">
             </div>
 
-            <div class="form-group modal-new-user-group">
-              <label [ngClass]="groupCss" class="col-sm-12 control-label">Grupo</label>
-              <div class="col-sm-12">
-                <select [ngClass]="groupCss" class="form-control col-sm-12 m-b" formControlName="group">
+            <div class="form-group col-sm-6">
+              <label [ngClass]="groupCss" class="control-label">Grupo</label>
+                <select [ngClass]="groupCss" class="form-control m-b" formControlName="group">
+                  <option value="" selected disabled hidden>Selecione um grupo</option>
                   <option *ngFor="let group of groups" value="{{ group.id }}">{{ group.title }}</option>
                 </select>
-              </div>
             </div>
 
             <div *ngIf="successMsg" class="alert alert-success modal-alert-center">
@@ -43,10 +42,10 @@
             </div>
 
             <div *ngIf="emailErrorMsg || passwordErrorMsg || nameErrorMsg || groupErrorMsg" class="animated tada alert alert-danger modal-alert-center">
-              <span *ngIf="emailErrorMsg" class="col-sm-12" for="">{{ emailErrorMsg }}<br></span>
-              <span *ngIf="nameErrorMsg" class="col-sm-12" for="">{{ nameErrorMsg }}<br></span>
-              <span *ngIf="passwordErrorMsg" class="col-sm-12" for="">{{ passwordErrorMsg }}<br></span>
-              <span *ngIf="groupErrorMsg" class="col-sm-12" for="">{{ groupErrorMsg }}<br></span>
+              <span *ngIf="emailErrorMsg" for="">{{ emailErrorMsg }}<br></span>
+              <span *ngIf="nameErrorMsg" for="">{{ nameErrorMsg }}<br></span>
+              <span *ngIf="passwordErrorMsg" for="">{{ passwordErrorMsg }}<br></span>
+              <span *ngIf="groupErrorMsg" for="">{{ groupErrorMsg }}<br></span>
             </div>
           </div>
 
