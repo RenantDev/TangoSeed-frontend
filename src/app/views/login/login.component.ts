@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from './login';
 import { AuthService } from '../../services/login/auth.service';
-import { VarGlobal } from 'app/services/var-global';
 
 @Component({
   selector: 'app-login',

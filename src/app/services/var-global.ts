@@ -1,13 +1,13 @@
 export class VarGlobal {
   // Perfil
-  USER_NAME: string = '...';
-  USER_GROUP: string = 'Minha Conta';
-  USER_AVATAR: string = 'default.png';
+  USER_NAME = '...';
+  USER_GROUP = 'Minha Conta';
+  USER_AVATAR = 'default.png';
   USER_MENU: Array<any> = [
     {
-      "title": "Dashboard",
-      "slug": "dashboard",
-      "children": []
+      'title': 'Dashboard',
+      'slug': 'dashboard',
+      'children': []
     },
   ];
 }

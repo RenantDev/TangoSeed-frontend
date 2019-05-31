@@ -16,6 +16,8 @@
 
             <div class="form-group col-sm-7">
               <label [ngClass]="emailCss" class="control-label">E-mail / Login</label>
+              <i class="fa fa-warning" style="color: darkred" popoverClass="custom-alerts" ngbPopover="You see, I show up on hover!" triggers="mouseenter:mouseleave"></i>
+
               <input [ngClass]="emailCss" formControlName="email" type="text" class="form-control">
             </div>
 
@@ -36,6 +38,7 @@
                   <option *ngFor="let group of groups" value="{{ group.id }}">{{ group.title }}</option>
                 </select>
             </div>
+
 
             <div *ngIf="successMsg" class="alert alert-success modal-alert-center">
               <span>Cadastro realizado com sucesso!</span>

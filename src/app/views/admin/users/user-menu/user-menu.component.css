@@ -22,3 +22,11 @@
   margin: 0 auto;
   min-width: 275px;
 }
+
+.custom-alerts {
+  background-color: rgba(255, 0, 0, 0.5);
+  font-size: 125%;
+}
+.custom-alerts .arrow::after {
+  background-color: rgba(255, 0, 0, 0.5);
+}

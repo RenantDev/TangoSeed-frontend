@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpHeaders, HttpClient} from '@angular/common/http';
-import {ConfigGlobal} from 'app/services/config-global';
 import {User} from '../../user';
 import {Observable} from 'rxjs';
+import {ConfigGlobal} from '../../../../../services/config-global';
 
 
 @Injectable({

@@ -3,10 +3,10 @@ import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
 import {MatPaginator, MatSort, MatFormField} from '@angular/material';
 import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {ConfigGlobal} from 'app/services/config-global';
 import {User} from '../user';
 import {EditUserModalComponent} from './edit-user-modal/edit-user-modal.component';
 import {FormBuilder} from '@angular/forms';
+import {ConfigGlobal} from '../../../../services/config-global';
 
 /**
  * @title Table retrieving data through HTTP

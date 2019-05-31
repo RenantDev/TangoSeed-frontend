@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
 
 declare var $: any;
 

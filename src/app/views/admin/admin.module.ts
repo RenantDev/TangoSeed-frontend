@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { UserMenuComponent } from './users/user-menu/user-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditUserModalComponent } from './users/user-table/edit-user-modal/edit-user-modal.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { EditUserModalComponent } from './users/user-table/edit-user-modal/edit-
     MatSortModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatIconModule
+    MatIconModule,
+    NgbModule
   ],
   declarations: [
     UsersComponent,
