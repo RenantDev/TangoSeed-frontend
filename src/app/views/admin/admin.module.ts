@@ -11,6 +11,7 @@ import { UserMenuComponent } from './users/user-menu/user-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditUserModalComponent } from './users/user-table/edit-user-modal/edit-user-modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   imports: [

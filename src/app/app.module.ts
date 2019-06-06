@@ -28,6 +28,7 @@ import {VarGlobal} from './services/var-global';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatTableModule, MatPaginatorModule, MatSortModule} from '@angular/material';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({

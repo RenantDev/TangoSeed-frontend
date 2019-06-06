@@ -23,6 +23,13 @@
   min-width: 275px;
 }
 
+
+.alertIconPopover{
+  margin-left: 10px;
+  color: darkred;
+  width: 16px;
+}
+
 .custom-alerts {
   background-color: rgba(255, 0, 0, 0.5);
   font-size: 125%;

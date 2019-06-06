@@ -16,40 +16,31 @@
 
             <div class="form-group col-sm-7">
               <label [ngClass]="emailCss" class="control-label">E-mail / Login</label>
-              <i class="fa fa-warning" style="color: darkred" popoverClass="custom-alerts" ngbPopover="You see, I show up on hover!" triggers="mouseenter:mouseleave"></i>
-
-              <input [ngClass]="emailCss" formControlName="email" type="text" class="form-control">
+              <i *ngIf="emailErrorMsg" class="fa fa-warning alertIconPopover animated tada" popoverClass="custom-alerts" ngbPopover="{{ emailErrorMsg }}" triggers="mouseenter:mouseleave"></i>
+             <input [ngClass]="emailCss" formControlName="email" type="text" class="form-control">
             </div>
 
             <div class="form-group col-sm-5">
               <label [ngClass]="passwordCss" class="control-label">Senha</label>
+              <i *ngIf="passwordErrorMsg" class="fa fa-warning alertIconPopover animated tada" popoverClass="custom-alerts" ngbPopover="{{ passwordErrorMsg }}" triggers="mouseenter:mouseleave"></i>
               <input [ngClass]="passwordCss" formControlName="password" type="password" class="form-control">
             </div>
 
             <div class="form-group col-sm-6">
               <label [ngClass]="nameCss" class="control-label">Nome de Exibição</label>
+              <i *ngIf="nameErrorMsg" class="fa fa-warning alertIconPopover animated tada" popoverClass="custom-alerts" ngbPopover="{{ nameErrorMsg }}" triggers="mouseenter:mouseleave"></i>
               <input [ngClass]="nameCss" formControlName="name" type="text" class="form-control">
             </div>
 
             <div class="form-group col-sm-6">
               <label [ngClass]="groupCss" class="control-label">Grupo</label>
-                <select [ngClass]="groupCss" class="form-control m-b" formControlName="group">
+              <i *ngIf="groupErrorMsg" class="fa fa-warning alertIconPopover animated tada" popoverClass="custom-alerts" ngbPopover="{{ groupErrorMsg }}" triggers="mouseenter:mouseleave"></i>
+              <select [ngClass]="groupCss" class="form-control m-b" formControlName="group">
                   <option value="" selected disabled hidden>Selecione um grupo</option>
                   <option *ngFor="let group of groups" value="{{ group.id }}">{{ group.title }}</option>
                 </select>
             </div>
 
-
-            <div *ngIf="successMsg" class="alert alert-success modal-alert-center">
-              <span>Cadastro realizado com sucesso!</span>
-            </div>
-
-            <div *ngIf="emailErrorMsg || passwordErrorMsg || nameErrorMsg || groupErrorMsg" class="animated tada alert alert-danger modal-alert-center">
-              <span *ngIf="emailErrorMsg" for="">{{ emailErrorMsg }}<br></span>
-              <span *ngIf="nameErrorMsg" for="">{{ nameErrorMsg }}<br></span>
-              <span *ngIf="passwordErrorMsg" for="">{{ passwordErrorMsg }}<br></span>
-              <span *ngIf="groupErrorMsg" for="">{{ groupErrorMsg }}<br></span>
-            </div>
           </div>
 
         </div>

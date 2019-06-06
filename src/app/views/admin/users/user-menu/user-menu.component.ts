@@ -1,16 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {FormGroup, FormControl, FormBuilder} from '@angular/forms';
+import {HttpHeaders, HttpClient} from '@angular/common/http';
+import {Router} from '@angular/router';
 import {ConfigGlobal} from '../../../../services/config-global';
+import Swal from 'sweetalert2';
 
+declare var $: any;
 
 @Component({
   selector: 'app-user-menu',
   templateUrl: './user-menu.component.html',
-  styleUrls: ['./user-menu.component.css']
+  styleUrls: ['./user-menu.component.css'],
 })
+
 export class UserMenuComponent implements OnInit {
+
+  @Output() closeModalEvent = new EventEmitter<boolean>();
 
   formulario: FormGroup;
 
@@ -28,7 +33,8 @@ export class UserMenuComponent implements OnInit {
 
   public successMsg: any;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) {
+  }
 
   ngOnInit() {
     // Define os campos do formulario
@@ -55,22 +61,33 @@ export class UserMenuComponent implements OnInit {
     this.formulario.disable();
 
     // Envia o POST para o backend
-    this.http.post(this.config.GLOBAL_URL + 'api/admin/users', this.formulario.value, { headers })
+    this.http.post(this.config.GLOBAL_URL + 'api/admin/users', this.formulario.value, {headers})
       .subscribe(data => {
 
-        // Remove qualquer msg de erro na tela
-        this.applyCssError();
+          // Remove qualquer msg de erro na tela
+          this.applyCssError();
 
-        // Cadastro realizado com sucesso
-        this.applyCssSuccess(true);
+          // Cadastro realizado com sucesso
+          this.applyCssSuccess(true);
 
-        // Limpa o formulário
-        this.formulario.reset();
+          // Limpa o formulário
+          this.formulario.reset();
 
-        // Reativa os campos do formulário
-        this.formulario.enable();
+          // Reativa os campos do formulário
+          this.formulario.enable();
 
-      },
+          $('#registerUser').modal('hide');
+
+          Swal.fire({
+            type: 'success',
+            title: 'Novo Usuário',
+            text: 'O cadastro de novo usuário foi realizado com sucesso!',
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+
+        },
         (error: any) => {
           // Exibe os erros na tela
           this.applyCssError(error);
@@ -184,7 +201,7 @@ export class UserMenuComponent implements OnInit {
 
     const url = this.config.GLOBAL_URL + 'api/admin/groups/list';
 
-    this.http.get(url, { headers })
+    this.http.get(url, {headers})
       .subscribe(data => {
         this.groups = data;
       });
