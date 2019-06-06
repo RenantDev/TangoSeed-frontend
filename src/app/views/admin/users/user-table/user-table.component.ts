@@ -7,6 +7,7 @@ import {User} from '../user';
 import {EditUserModalComponent} from './edit-user-modal/edit-user-modal.component';
 import {FormBuilder} from '@angular/forms';
 import {ConfigGlobal} from '../../../../services/config-global';
+import Swal from 'sweetalert2';
 
 /**
  * @title Table retrieving data through HTTP
@@ -110,6 +111,63 @@ export class UserTableComponent implements OnInit, OnDestroy {
         this.editModal.openM(this.userEditing.data);
       }
     );
+  }
+
+  deleteUser(id) {
+    Swal.fire({
+      title: 'Você quer fazer isso?',
+      text: 'Todas as informações do usuário serão perdidas!',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.value) {
+        // Define o cabeçario do POST
+        const headers = new HttpHeaders({
+          'Accept': 'application/json',
+          'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+        });
+
+        // Deleta o usuário
+        // Envia o POST para o backend
+        this.http.delete(this.configGlobal.GLOBAL_URL + 'api/admin/users/' + id, {headers})
+          .subscribe(data => {
+
+              // Atualiza a tabela
+              this.tableRefresh();
+
+              // Envia um alerta de sucesso
+              Swal.fire(
+                {
+                  title: 'Usuário deletado!',
+                  type: 'success',
+                  showConfirmButton: false,
+                  timer: 1500
+                }
+              );
+
+            },
+            (error: any) => {
+              // Atualiza a tabela
+              this.tableRefresh();
+
+              // Envia um alerta de erro
+              Swal.fire(
+                {
+                  title: 'Erro!',
+                  text: 'Não foi possível deletar o usuário!',
+                  type: 'error',
+                  showConfirmButton: false,
+                  timer: 1500
+                }
+              );
+            }
+          );
+
+
+      }
+    })
   }
 
   onSubmit() {

@@ -86,7 +86,7 @@
                 <span>Editar</span>
               </button>
               <div class="dropdown-divider"></div>
-              <button style="color: red;" mat-menu-item>
+              <button style="color: red;" (click)="deleteUser(row.id)" mat-menu-item>
                 <mat-icon>delete</mat-icon>
                 <span>Excluir</span>
               </button>
