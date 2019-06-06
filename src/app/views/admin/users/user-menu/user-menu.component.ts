@@ -4,6 +4,8 @@ import {HttpHeaders, HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {ConfigGlobal} from '../../../../services/config-global';
 import Swal from 'sweetalert2';
+import {UserTableComponent} from '../user-table/user-table.component';
+
 
 declare var $: any;
 
@@ -33,7 +35,7 @@ export class UserMenuComponent implements OnInit {
 
   public successMsg: any;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal, private userTable: UserTableComponent) {
   }
 
   ngOnInit() {
@@ -78,12 +80,14 @@ export class UserMenuComponent implements OnInit {
 
           $('#registerUser').modal('hide');
 
+          this.userTable.tableRefresh();
+
           Swal.fire({
             type: 'success',
             title: 'Novo Usuário',
             text: 'O cadastro de novo usuário foi realizado com sucesso!',
             showConfirmButton: false,
-            timer: 3000
+            timer: 1500
           });
 
 
