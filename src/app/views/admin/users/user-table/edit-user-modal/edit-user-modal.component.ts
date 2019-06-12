@@ -33,7 +33,8 @@ export class EditUserModalComponent implements OnInit {
       group: new FormControl()
     });
 
-    console.log(this.formatSelectGroup());
+    // Define o select do grupo de usuário
+    this.getSelectGroup();
 
   }
 
@@ -52,9 +53,24 @@ export class EditUserModalComponent implements OnInit {
       email: userInfo.email,
       password: '',
       status: userInfo.status,
-      group: ''
+      group: userInfo.group,
     });
 
+  }
+
+  // Busca os grupos de usuários do sistema
+  getSelectGroup() {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    });
+
+    const url = this.config.GLOBAL_URL + 'api/admin/groups/list';
+
+    this.http.get(url, {headers})
+      .subscribe(data => {
+        this.groups = data;
+      });
   }
 
   formatSelectGroup() {
