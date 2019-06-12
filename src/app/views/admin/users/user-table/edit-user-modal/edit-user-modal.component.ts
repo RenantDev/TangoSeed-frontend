@@ -5,6 +5,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {ConfigGlobal} from '../../../../../services/config-global';
 
+declare var $: any;
+
 @Component({
   selector: 'app-edit-user-modal',
   templateUrl: './edit-user-modal.component.html',
@@ -55,6 +57,8 @@ export class EditUserModalComponent implements OnInit {
       status: userInfo.status,
       group: userInfo.group,
     });
+
+    $('#editUser').modal();
 
   }
 

@@ -9,6 +9,9 @@ import {FormBuilder} from '@angular/forms';
 import {ConfigGlobal} from '../../../../services/config-global';
 import Swal from 'sweetalert2';
 
+
+declare var $: any;
+
 /**
  * @title Table retrieving data through HTTP
  */
@@ -107,8 +110,17 @@ export class UserTableComponent implements OnInit, OnDestroy {
         console.log(err);
       },
       () => {
-        // Define as informações do modal
-        this.editModal.openM(this.userEditing.data);
+        if (this.userEditing.data !== undefined) {
+          // Define as informações do modal
+          this.editModal.openM(this.userEditing.data);
+        } else {
+          Swal.fire({
+            title: 'Erro!',
+            text: 'O usuário não existe ou foi excluido!',
+            type: 'warning',
+          });
+          this.tableRefresh();
+        }
       }
     );
   }
