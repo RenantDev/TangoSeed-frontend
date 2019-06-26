@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormGroup, FormControl, FormBuilder} from '@angular/forms';
 import {EditUserModalService} from './edit-user-modal.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {ConfigGlobal} from '../../../../../services/config-global';
+import Swal from 'sweetalert2';
 
 declare var $: any;
 
 @Component({
   selector: 'app-edit-user-modal',
   templateUrl: './edit-user-modal.component.html',
-  styleUrls: ['./edit-user-modal.component.css']
+  styleUrls: ['./edit-user-modal.component.css'],
 })
 export class EditUserModalComponent implements OnInit {
 
@@ -19,7 +20,12 @@ export class EditUserModalComponent implements OnInit {
 
   public groups: any;
 
-  constructor(private formBuilder: FormBuilder, private editUserService: EditUserModalService, private http: HttpClient, private router: Router, private config: ConfigGlobal) {
+  constructor(private formBuilder: FormBuilder,
+              private editUserService: EditUserModalService,
+              private http: HttpClient,
+              private router: Router,
+              private config: ConfigGlobal) {
+
 
   }
 
@@ -131,6 +137,7 @@ export class EditUserModalComponent implements OnInit {
     if (
       this.userEditForm.value.email ||
       this.userEditForm.value.name ||
+      this.userEditForm.value.password ||
       this.userEditForm.value.status ||
       this.userEditForm.value.group
     ) {
@@ -146,17 +153,57 @@ export class EditUserModalComponent implements OnInit {
             console.log('processando atualização');
             console.log(data);
 
+            if (data['data'] !== undefined) {
+              // fecha o modal
+              $('#editUser').modal('hide');
+
+              // Envia um alerta de erro
+              Swal.fire(
+                {
+                  title: 'Sucesso!',
+                  text: 'As informações do usuário foram atualizadas com sucesso!',
+                  type: 'success',
+                  showConfirmButton: false,
+                  timer: 2000
+                }
+              );
+            }
+
           },
           (error: any) => {
             console.log('erro no processo de atualização');
             console.log(error);
+
+            // fecha o modal
+            $('#editUser').modal('hide');
+
+            // Envia um alerta de erro
+            Swal.fire(
+              {
+                title: 'Erro!',
+                text: 'Não foi possível atualizar as informações do usuário!',
+                type: 'error',
+                showConfirmButton: false,
+                timer: 2000
+              }
+            );
           },
           () => {
             console.log('Atualização executanda com exito!');
           }
         );
     } else {
-      console.log('Nenhum dado foi alterado.');
+      // fecha o modal
+      $('#editUser').modal('hide');
+
+      // Envia um alerta
+      Swal.fire(
+        {
+          title: 'Aviso!',
+          text: 'Nenhuma informação do usuário foi alterada!',
+          type: 'info'
+        }
+      );
     }
   }
 
