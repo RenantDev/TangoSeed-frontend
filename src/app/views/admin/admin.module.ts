@@ -11,6 +11,9 @@ import { UserMenuComponent } from './users/user-menu/user-menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditUserModalComponent } from './users/user-table/edit-user-modal/edit-user-modal.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { GroupTableComponent } from './groups/group-table/group-table.component';
+import { GroupMenuComponent } from './groups/group-menu/group-menu.component';
+import { GroupEditComponent } from './groups/group-edit/group-edit.component';
 
 @NgModule({
   imports: [
@@ -33,7 +36,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ScopesComponent,
     UserTableComponent,
     UserMenuComponent,
-    EditUserModalComponent
+    EditUserModalComponent,
+    GroupTableComponent,
+    GroupMenuComponent,
+    GroupEditComponent
   ]
 })
 export class AdminModule { }
