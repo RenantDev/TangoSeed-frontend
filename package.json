@@ -1,13 +1,16 @@
 {
   "name": "tangoseed",
   "version": "2.7.1",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "electron": "ng build && electron .",
+    "electron-eot": "ng build --prod && electron ."
   },
   "private": true,
   "dependencies": {
@@ -27,6 +30,7 @@
     "@sweetalert2/ngx-sweetalert2": "^5.0.3",
     "animate.css": "3.7.0",
     "bootstrap": "^4.3.1",
+    "bootstrap-duallistbox": "^3.0.6",
     "chart.js": "~2.7.3",
     "core-js": "~2.5.7",
     "font-awesome": "~4.7.0",
@@ -52,6 +56,7 @@
     "@types/jasmine": "2.8.9",
     "@types/node": "~10.12.1",
     "codelyzer": "~4.5.0",
+    "electron": "^6.0.0",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
