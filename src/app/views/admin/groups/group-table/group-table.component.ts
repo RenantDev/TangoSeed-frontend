@@ -5,6 +5,7 @@ import {merge, Observable, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import {ConfigGlobal} from '../../../../services/config-global';
+import {Group} from '../group';
 
 declare var $: any;
 
@@ -135,13 +136,6 @@ export class GroupTableComponent implements OnInit, OnDestroy {
 
   }
 } 
-
-export interface Group {
-  id: number;
-  title: string;
-  description: string;
-  status: number;
-}
 
 export interface GroupList {
   items: Group[];

@@ -1,5 +1,7 @@
-<button (click)="resetForm()" class="btn btn-primary form-control" data-toggle="modal" data-target="#registerGroup"><i class="fa fa-user-circle"></i>
-  Novo Grupo</button>
+<button (click)="resetForm()" class="btn btn-primary form-control" data-toggle="modal" data-target="#registerGroup">
+  <i class="fa fa-user-circle"></i>
+  Novo Grupo
+</button>
 
 
 <div class="modal fade" id="registerGroup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -28,26 +30,31 @@
 
             <div class="form-group col-sm-12">
               <label class="control-label">Administração</label>
-              <div class="row">
-                <div class="col-sm-6 checkbox checkbox-primary">
-                  <input id="checkbox_admin_user" type="checkbox">
-                  <label for="checkbox_admin_user">
-                      Usuários
-                  </label>
+              <div class="col-sm-12">
+
+                <div class="row">
+                    <div class="col-sm-6 checkbox checkbox-primary">
+                        <input id="checkbox_admin_user" type="checkbox">
+                        <label for="checkbox_admin_user">
+                            Usuários
+                        </label>
+                      </div>
+        
+                      <div class="col-sm-6 checkbox checkbox-primary">
+                        <input id="checkbox_admin_group" type="checkbox">
+                        <label for="checkbox_admin_group">
+                            Grupos
+                        </label>
+                      </div>
+      
+                      <div class="col-sm-6 checkbox checkbox-primary">
+                        <input id="checkbox_admin_role" type="checkbox">
+                        <label for="checkbox_admin_role">
+                            Funções
+                        </label>
+                      </div>
                 </div>
-  
-                <div class="col-sm-6 checkbox checkbox-primary">
-                  <input id="checkbox_admin_group" type="checkbox">
-                  <label for="checkbox_admin_group">
-                      Grupos
-                  </label>
-                </div>
-                <div class="col-sm-6 checkbox checkbox-primary">
-                  <input id="checkbox_admin_role" type="checkbox">
-                  <label for="checkbox_admin_role">
-                      Funções
-                  </label>
-                </div>
+
               </div>
             </div>
             
