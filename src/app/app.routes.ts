@@ -18,7 +18,6 @@ import {BasicLayoutComponent} from './components/common/layouts/basicLayout.comp
 import {UsersComponent} from "./views/admin/users/users.component";
 import {GroupsComponent} from "./views/admin/groups/groups.component";
 import {RolesComponent} from "./views/admin/roles/roles.component";
-import {ScopesComponent} from "./views/admin/scopes/scopes.component";
 
 export const ROUTES: Routes = [
   // Main redirect
@@ -53,7 +52,6 @@ export const ROUTES: Routes = [
       {path: 'users', component: UsersComponent},
       {path: 'groups', component: GroupsComponent},
       {path: 'roles', component: RolesComponent},
-      {path: 'scopes', component: ScopesComponent},
     ],
     canActivate: [AuthGuard]
   },

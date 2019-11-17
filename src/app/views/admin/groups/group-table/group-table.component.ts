@@ -1,5 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {animate, state, style, transition, trigger} from '@angular/animations';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Component, OnInit, ViewChild, OnDestroy} from '@angular/core';
+import {MatPaginator, MatSort, MatFormField} from '@angular/material';
+import {merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import {ConfigGlobal} from '../../../../services/config-global';
 
 declare var $: any;
 
@@ -8,224 +13,188 @@ declare var $: any;
   templateUrl: './group-table.component.html',
   styleUrls: ['./group-table.component.css'],
 })
-export class GroupTableComponent implements OnInit {
+export class GroupTableComponent implements OnInit, OnDestroy {
+// Variaveis de Edição do usuário
+  editGroup: any;
+  groupEditing: any;
 
-  dataSource = GROUPS_DATA;
-  groupList: GroupList | null;
+  // Variaveis da Tabela
+  displayedColumns: string[] = ['id', 'title', 'description', 'status', 'menu'];
+  groupList: AdminGroupsHttpDao | null;
+  data: Group[] = [];
 
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
+  pageSize = 15;
+  current_page = 1;
 
-  constructor() {
+  selectValueOption = null;
+  inputValue = null;
+
+  // @ViewChild(EditGroupModalComponent) editModal: EditGroupModalComponent;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatFormField) search: MatFormField;
+
+  constructor(private http: HttpClient, private configGlobal: ConfigGlobal) {
   }
 
   ngOnInit() {
-    $('.dual_select').bootstrapDualListbox({
-      selectorMinimalHeight: 160
-    });
+    this.groupList = new AdminGroupsHttpDao(this.http, this.configGlobal);
+
+    // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    this.tableRefresh();
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.groupList!.getRepoIssues(
+            this.sort.direction,
+            this.sort.active,
+            this.paginator.pageIndex,
+            this.paginator.pageSize,
+            this.selectValueOption,
+            this.inputValue
+          );
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data['total'];
+          this.pageSize = data['per_page'];
+          this.current_page = data['current_page'];
+
+          return data['data'];
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return observableOf([]);
+        })
+      ).subscribe(data => this.data = data);
+  }
+// editModal = new EditUserModalComponent;
+  // Edita usuário do sistema
+  editGroupModal(id) {
+    // Abre model e busca a informação do usuário no sistema de acordo com o ID fornecido pela tabela.
+    this.editGroup = new AdminGroupsHttpDao(this.http, this.configGlobal);
+
+    this.editGroup!.getUserInfo(id).subscribe(
+      result => {
+        this.groupEditing = result;
+      },
+      err => {
+        console.log(err);
+      },
+      () => {
+        if (this.groupEditing.data !== undefined) {
+          // Define as informações do modal
+          // this.editModal.openM(this.groupEditing.data);
+        } else {
+          Swal.fire({
+            title: 'Erro!',
+            text: 'O usuário não existe ou foi excluido!',
+            type: 'warning',
+          });
+          this.tableRefresh();
+        }
+      }
+    );
+  }
+  tableRefresh(reset = false) {
+
+    if (reset) {
+      this.selectValueOption = null;
+      this.inputValue = null;
+    }
+    this.paginator._changePageSize(this.paginator.pageSize);
+
   }
 
+  onSubmit() {
+    this.paginator._changePageSize(this.paginator.pageSize);
+  }
 
+  applyFilterSelect(selectValue: string) {
+    this.selectValueOption = selectValue.trim().toLowerCase();
+  }
+
+  // Filtro de usuários do sistema
+  applyFilterInput(filterValue: string) {
+    this.inputValue = filterValue.trim().toLowerCase();
+  }
+  ngOnDestroy() {
+
+  }
+} 
+
+export interface Group {
+  id: number;
+  title: string;
+  description: string;
+  status: number;
 }
 
 export interface GroupList {
-  id: number;
-  name: string;
-  status: number;
-  description: string;
-  roles: any;
-  roles_select: any;
+  items: Group[];
+  total_count: number;
 }
 
-const GROUPS_DATA: GroupList[] = [
-  {
-    id: 1,
-    name: 'Developer',
-    status: 1,
-    description: `Hydrogen is a chemical element with symbol H and atomic number 1. With a standard
-        atomic weight of 1.008, hydrogen is the lightest element on the periodic table.`,
-    roles: [
-      {
-        id: 1,
-        title: 'Resumo Dev',
-        description: 'Função para Desenvolvedor',
-        group_id: 1,
-        role_id: 2,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 2,
-        title: 'Administrador',
-        description: 'Administração do sistema.',
-        group_id: 2,
-        role_id: 3,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 3,
-        title: 'Usuários',
-        description: 'Gerenciador de usuários do sistema',
-        group_id: 2,
-        role_id: 4,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 4,
-        title: 'Grupos',
-        description: 'Gerenciador de grupos do sistema',
-        group_id: 2,
-        role_id: 5,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 5,
-        title: 'Funções',
-        description: 'Gerenciador de funções do sistema',
-        group_id: 2,
-        role_id: 6,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 6,
-        title: 'Extenções',
-        description: 'Gerenciador de extenções do sistema',
-        group_id: 2,
-        role_id: 7,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      }
-    ],
-    roles_select: []
-  }, {
-    id: 2,
-    name: 'Administrator',
-    status: 1,
-    description: `Helium is a chemical element with symbol He and atomic number 2. It is a
-        colorless, odorless, tasteless, non-toxic, inert, monatomic gas, the first in the noble gas
-        group in the periodic table. Its boiling point is the lowest among all the elements.`,
-    roles: [
-      {
-        id: 1,
-        title: 'Resumo Dev',
-        description: 'Função para Desenvolvedor',
-        group_id: 1,
-        role_id: 2,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 2,
-        title: 'Administrador',
-        description: 'Administração do sistema.',
-        group_id: 2,
-        role_id: 3,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 3,
-        title: 'Usuários',
-        description: 'Gerenciador de usuários do sistema',
-        group_id: 2,
-        role_id: 4,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 4,
-        title: 'Grupos',
-        description: 'Gerenciador de grupos do sistema',
-        group_id: 2,
-        role_id: 5,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 5,
-        title: 'Funções',
-        description: 'Gerenciador de funções do sistema',
-        group_id: 2,
-        role_id: 6,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 6,
-        title: 'Extenções',
-        description: 'Gerenciador de extenções do sistema',
-        group_id: 2,
-        role_id: 7,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      }
-    ],
-    roles_select: []
-  }, {
-    id: 3,
-    name: 'Client',
-    status: 1,
-    description: `Lithium is a chemical element with symbol Li and atomic number 3. It is a soft,
-        silvery-white alkali metal. Under standard conditions, it is the lightest metal and the
-        lightest solid element.`,
-    roles: [
-      {
-        id: 1,
-        title: 'Resumo Dev',
-        description: 'Função para Desenvolvedor',
-        group_id: 1,
-        role_id: 2,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 2,
-        title: 'Administrador',
-        description: 'Administração do sistema.',
-        group_id: 2,
-        role_id: 3,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 3,
-        title: 'Usuários',
-        description: 'Gerenciador de usuários do sistema',
-        group_id: 2,
-        role_id: 4,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 4,
-        title: 'Grupos',
-        description: 'Gerenciador de grupos do sistema',
-        group_id: 2,
-        role_id: 5,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 5,
-        title: 'Funções',
-        description: 'Gerenciador de funções do sistema',
-        group_id: 2,
-        role_id: 6,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      },
-      {
-        id: 6,
-        title: 'Extenções',
-        description: 'Gerenciador de extenções do sistema',
-        group_id: 2,
-        role_id: 7,
-        created_at: '2019-05-29 16:26:04',
-        updated_at: '2019-05-29 16:26:04'
-      }
-    ],
-    roles_select: []
-  },
-];
+
+export class AdminGroupsHttpDao {
+
+  private pgSize: any;
+
+  constructor(private http: HttpClient, private config: ConfigGlobal) {
+  }
+
+  getRepoIssues(sort: string, order: string, page: number, pageSizeOptions: number, find: string, selectValueOption: string): Observable<GroupList> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    });
+
+    if (find === undefined || find === '' || find === null || selectValueOption === null) {
+      find = '';
+    } else {
+      find = 'search=' + selectValueOption + '&searchFields=' + find + ':like&';
+    }
+
+    if (order === undefined) {
+      order = '';
+    } else {
+      order = 'orderBy=' + order + '&';
+    }
+
+    if (pageSizeOptions === undefined) {
+      this.pgSize = '';
+    } else {
+      this.pgSize = '&limit=' + pageSizeOptions;
+    }
+
+    const href = this.config.GLOBAL_URL + 'api/admin/groups';
+    const requestUrl = href + `?` + find + `${order}sortedBy=${sort}&page=${page + 1}${this.pgSize}`;
+
+    return this.http.get<GroupList>(requestUrl, {headers});
+  }
+
+  getGroupInfo(groupID: number): Observable<Group> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ' + sessionStorage.getItem('token'),
+    });
+
+    const url = this.config.GLOBAL_URL + 'api/admin/groups/' + groupID;
+
+    return this.http.get<Group>(url, {headers});
+  }
+
+}

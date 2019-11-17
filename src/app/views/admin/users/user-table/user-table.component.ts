@@ -8,7 +8,7 @@ import {EditUserModalComponent} from './edit-user-modal/edit-user-modal.componen
 import {FormBuilder} from '@angular/forms';
 import {ConfigGlobal} from '../../../../services/config-global';
 import Swal from 'sweetalert2';
-
+ 
 
 declare var $: any;
 
