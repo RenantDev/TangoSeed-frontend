@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {MatPaginator, MatSort, MatFormField} from '@angular/material';
+
+declare var $: any;
 
 @Component({
   selector: 'app-group-menu',
