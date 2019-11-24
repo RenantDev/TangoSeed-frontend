@@ -28,36 +28,65 @@
               <textarea [ngClass]="descriptionCss" formControlName="description" type="text" class="form-control"></textarea>
             </div>
 
-            <div class="form-group col-sm-12">
-              <label class="control-label">Administração</label>
-              <div class="col-sm-12">
+            <!-- Selecao de funcoes -->
+            <div class="col-lg-12">
+              <div class="tabs-container">
 
-                <div class="row">
-                    <div class="col-sm-6 checkbox checkbox-primary">
-                        <input id="checkbox_admin_user" type="checkbox">
-                        <label for="checkbox_admin_user">
-                            Usuários
-                        </label>
+                  <div class="tabs-left">
+                      <ul class="nav nav-tabs">
+                          <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> <i class="fa fa-users"></i> </a></li>
+                          <li><a class="nav-link" data-toggle="tab" href="#tab-2"><i class="fa fa-plus"></i></a></li>
+                          <li><a class="nav-link" data-toggle="tab" href="#tab-2"><i class="fa fa-plus"></i></a></li>
+                      </ul>
+                      <div class="tab-content ">
+                          <div id="tab-1" class="tab-pane active">
+                            <!-- Para cada funcao add 25 px -->
+                              <div class="panel-body" style="min-height: 300px">
+                                  <strong>Administração</strong>
+
+                                    <div class="col-sm-12">
+                      
+                                      <div class="row">
+                                          <div class="col-sm-6 checkbox checkbox-primary">
+                                              <input id="checkbox_admin_user" type="checkbox">
+                                              <label for="checkbox_admin_user">
+                                                  Usuários
+                                              </label>
+                                            </div>
+                              
+                                            <div class="col-sm-6 checkbox checkbox-primary">
+                                              <input id="checkbox_admin_group" type="checkbox">
+                                              <label for="checkbox_admin_group">
+                                                  Grupos
+                                              </label>
+                                            </div>
+                            
+                                            <div class="col-sm-6 checkbox checkbox-primary">
+                                              <input id="checkbox_admin_role" type="checkbox">
+                                              <label for="checkbox_admin_role">
+                                                  Funções
+                                              </label>
+                                            </div>
+                                      </div>
+                      
+                                  </div>
+                              </div>
+                          </div>
+                          <div id="tab-2" class="tab-pane">
+                              <div class="panel-body">
+                                  <strong>Novas Funções</strong>
+
+                                  <p>Para adicionar uma nova função entre em contato com o desenvolvedor.</p>
+
+                              </div>
+                          </div>
                       </div>
-        
-                      <div class="col-sm-6 checkbox checkbox-primary">
-                        <input id="checkbox_admin_group" type="checkbox">
-                        <label for="checkbox_admin_group">
-                            Grupos
-                        </label>
-                      </div>
-      
-                      <div class="col-sm-6 checkbox checkbox-primary">
-                        <input id="checkbox_admin_role" type="checkbox">
-                        <label for="checkbox_admin_role">
-                            Funções
-                        </label>
-                      </div>
-                </div>
+
+                  </div>
 
               </div>
-            </div>
-            
+          </div>
+
 
           </div>
 
