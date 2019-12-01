@@ -21,7 +21,7 @@ export class UserMenuComponent implements OnInit {
 
   formulario: FormGroup;
 
-  public groups: any; 
+  public groups: any;
 
   public nameCss: any;
   public emailCss: any;

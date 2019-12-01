@@ -4,8 +4,8 @@ import {HttpHeaders, HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {ConfigGlobal} from '../../../../services/config-global';
 import Swal from 'sweetalert2';
-import { GroupTableComponent } from '../group-table/group-table.component';
-import * as _ from "lodash";
+import {GroupTableComponent} from '../group-table/group-table.component';
+import * as _ from 'lodash';
 
 declare var $: any;
 
@@ -20,19 +20,21 @@ export class GroupMenuComponent implements OnInit {
 
   formulario: FormGroup;
 
-  public title: any; 
+  public title: any;
   public description: any;
 
-  public roles: any; 
+  public roles: any;
 
   public formListItem: any = [];
 
   public titleCss: any;
   public titleErrorMsg: any;
-  
+
   public successMsg: any;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal, private groupTable: GroupTableComponent) { }
+
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router, private config: ConfigGlobal, private groupTable: GroupTableComponent) {
+  }
 
   // Inicia o formulario
   ngOnInit() {
@@ -48,16 +50,16 @@ export class GroupMenuComponent implements OnInit {
   }
 
   // Cria uma array com o ID de cada função do sistema que deve ser add no Grupo
-  arrayCheckBox(role){
+  arrayCheckBox(role) {
 
     // Busca o index do item da array
-    var idx = this.formListItem.indexOf(role);
+    const idx = this.formListItem.indexOf(role);
 
     // Se existir o item na array deve removelo se nao add novo item
-    if(idx != -1){
-      this.formListItem.splice(idx, 1);  
-    }else{
-      this.formListItem.push(role);    
+    if (idx !== -1) {
+      this.formListItem.splice(idx, 1);
+    } else {
+      this.formListItem.push(role);
     }
 
     // Define no objeto formulario quais as funções do novo grupo
@@ -66,7 +68,7 @@ export class GroupMenuComponent implements OnInit {
       description: this.formulario.value.description,
       roles: this.formListItem,
     });
-    
+
   }
 
   // Busca as funcoes do sistema e suas respectivas categorias
@@ -86,7 +88,7 @@ export class GroupMenuComponent implements OnInit {
 
   // Reinicia o formulário
   resetForm() {
-    // this.resetImputError();
+    this.resetImputError();
     this.formulario.reset();
   }
 
