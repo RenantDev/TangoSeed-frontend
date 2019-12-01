@@ -24,7 +24,6 @@
 
             <div class="form-group col-sm-12">
               <label [ngClass]="descriptionCss" class="control-label">Descrição</label>
-              <i *ngIf="descriptionErrorMsg" class="fa fa-warning alertIconPopover animated tada" popoverClass="custom-alerts" ngbPopover="{{ descriptionErrorMsg }}" triggers="mouseenter:mouseleave"></i>
               <textarea [ngClass]="descriptionCss" formControlName="description" type="text" class="form-control"></textarea>
             </div>
 
@@ -36,7 +35,6 @@
                       <ul class="nav nav-tabs">
                           <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> <i class="fa fa-users"></i> </a></li>
                           <li><a class="nav-link" data-toggle="tab" href="#tab-2"><i class="fa fa-plus"></i></a></li>
-                          <li><a class="nav-link" data-toggle="tab" href="#tab-2"><i class="fa fa-plus"></i></a></li>
                       </ul>
                       <div class="tab-content ">
                           <div id="tab-1" class="tab-pane active">
@@ -45,25 +43,25 @@
                                   <strong>Administração</strong>
 
                                     <div class="col-sm-12">
-                      
+                       
                                       <div class="row">
                                           <div class="col-sm-6 checkbox checkbox-primary">
-                                              <input id="checkbox_admin_user" type="checkbox">
-                                              <label for="checkbox_admin_user">
+                                              <input (click)="arrayCheckBox(4)" value="teste"  id="cb_admin_user" type="checkbox">
+                                              <label for="cb_admin_user">
                                                   Usuários
                                               </label>
                                             </div>
                               
                                             <div class="col-sm-6 checkbox checkbox-primary">
-                                              <input id="checkbox_admin_group" type="checkbox">
-                                              <label for="checkbox_admin_group">
+                                              <input (click)="arrayCheckBox(5)" id="cb_admin_group" type="checkbox">
+                                              <label for="cb_admin_group">
                                                   Grupos
                                               </label>
                                             </div>
                             
                                             <div class="col-sm-6 checkbox checkbox-primary">
-                                              <input id="checkbox_admin_role" type="checkbox">
-                                              <label for="checkbox_admin_role">
+                                              <input (click)="arrayCheckBox(6)" id="cb_admin_role" type="checkbox">
+                                              <label for="cb_admin_role">
                                                   Funções
                                               </label>
                                             </div>
